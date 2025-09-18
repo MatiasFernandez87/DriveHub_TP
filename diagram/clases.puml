@@ -1,0 +1,86 @@
+@startuml DriveHub
+
+' El diagrama de clases es orientativo, podra sufrir cambios a medida que avance el proyecto.
+
+title Diagrama de Clases - DriveHub
+
+enum EstadoVehiculo {
+    Disponible,
+    En_Alquiler,
+    En_Mantenimiento,
+    Necesita_Limpieza
+}
+
+enum EstadoReserva{
+    En_Curso,
+    Finalizada,
+}
+
+abstract class Vehiculo {
+    # matricula: string
+    # estado: EstadoVehiculo
+    # tarifaBase: number
+    # kilometraje: number
+    # cargoExtra: number
+
+    + abstract calcularTarifa(diasTotales: number, kmRecorridos: number): number{}
+    + estaDisponible(): boolean
+
+}
+
+class Compacto extends Vehiculo {
+    + calcularTarifa(diasTotales: number, kmRecorridos: number): number{}
+}
+
+class Sedan extends Vehiculo {
+    + calcularTarifa(diasTotales: number, kmRecorridos: number): number{}
+}
+
+class SUV extends Vehiculo {
+    + calcularTarifa(diasTotales: number, kmRecorridos: number): number{}
+}
+
+class Cliente {
+    - static idBase: number = 1
+    - idCliente: number
+    - nombre: string
+    - apellido: string
+    - reserva: Reserva
+
+    + solicitarReserva(vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date): void
+    + manejar(kilometros: number): void
+    
+}
+
+class Reserva {
+    - idReserva: number
+    - vehiculo: Vehiculo
+    - cliente: Cliente
+    - fechaInicio: Date
+    - fechaFin: Date
+    - kmInicial: number
+    - kmRecorridos: number
+    - estadoReserva: EstadoReserva    
+
+    + registrarUsoVehiculo(kilometros: number): void
+}
+
+class SistemaDriveHub {
+    - vehiculos: Vehiculo[]
+    - clientes: Cliente[]
+    - reservas: Reserva[]
+    - mantenimiento: Mantenimiento[]
+
+    + static crearReserva(cliente: Cliente, vehiculo Vehiculo, fechaInicio: Date, fechaFin: Date)
+
+}
+
+SistemaDriveHub *-- Vehiculo
+SistemaDriveHub *-- Cliente
+SistemaDriveHub *-- Reserva
+SistemaDriveHub *-l- Mantenimiento
+
+Reserva *-r- Cliente
+Reserva *-l- Vehiculo
+
+@enduml
