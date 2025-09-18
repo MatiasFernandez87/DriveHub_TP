@@ -25,6 +25,7 @@ abstract class Vehiculo {
 
     + abstract calcularTarifa(diasTotales: number, kmRecorridos: number): number{}
     + estaDisponible(): boolean
+    + actualizarKilometraje(kilometros: number): void
 
 }
 
@@ -65,20 +66,37 @@ class Reserva {
     + registrarUsoVehiculo(kilometros: number): void
 }
 
+class Mantenimiento {
+    - vehiculo: Vehiculo
+    - fecha: Date
+    - costo: number
+}
+
 class SistemaDriveHub {
     - vehiculos: Vehiculo[]
     - clientes: Cliente[]
     - reservas: Reserva[]
-    - mantenimiento: Mantenimiento[]
+    - mantenimiento: Mantenimiento[]    
 
-    + static crearReserva(cliente: Cliente, vehiculo Vehiculo, fechaInicio: Date, fechaFin: Date)
+    + static crearReserva(cliente: Cliente, vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date)        
+    + asignarMantenimiento(vehiculo: Vehiculo, fecha: Date, costo: number)) 
 
 }
+
+'notas
+note left of SistemaDriveHub::crearReserva
+    Este metodo deberia chequear que el vehiculo este disponible antes de crear la reserva.
+end note
+
+note left of SistemaDriveHub::asignarMantenimiento
+    Este metodo deberia llamar a vehiculo.setEstado() y actualizarlo.
+end note
+
 
 SistemaDriveHub *-- Vehiculo
 SistemaDriveHub *-- Cliente
 SistemaDriveHub *-- Reserva
-SistemaDriveHub *-l- Mantenimiento
+SistemaDriveHub *-r- Mantenimiento
 
 Reserva *-r- Cliente
 Reserva *-l- Vehiculo
