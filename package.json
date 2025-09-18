@@ -1,0 +1,31 @@
+{
+  "name": "cuvl_lab3",
+  "version": "1.0.0",
+  "description": "cuvl_lab3",
+  "main": "dist/app.js",
+  "scripts": {
+    "build": "tsc",
+    "build:dev": "tsc",
+    "clean": "npm run clean:build && npm run clean:temp",
+    "clean:build": "npx rimraf ./dist",
+    "clean:temp": "npx rimraf ./tmp",
+    "dev-mode": "ts-node ./src/index.ts",
+    "lint": "npx eslint ./src",
+    "start": "node ./dist/index.js",
+    "start:dev": "tsc && node ./dist/index.js",
+    "test": "npx jest tests --runInBand --detectOpenHandles",
+    "prebuild": "npm run clean",
+    "lint-fix": "npx eslint ./src --fix"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.4.0",
+    "jest": "^29.7",
+    "jest-compact-reporter": "^1.2.9",
+    "jest-junit": "^16.0.0",
+    "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.9"
+  },
+  "license": "ISC"
+}
