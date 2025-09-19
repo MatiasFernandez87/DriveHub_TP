@@ -15,12 +15,7 @@ export default abstract class Vehiculo{
     }
 
     public actualizarKilometraje(nuevoKilometraje: number): void {
-        if (nuevoKilometraje >= this.kilometraje) {
-            this.kilometraje = nuevoKilometraje;
-        } else {
-            throw new Error("El nuevo kilometraje no puede ser menor que el actual.");
-        };
-
+         this.kilometraje += nuevoKilometraje;
 }
 
     public estaDisponible(): boolean {
@@ -29,4 +24,5 @@ export default abstract class Vehiculo{
 
 
     public abstract calcularTarifa(diasTotales: number, kmRecorridos: number): number;
+
 }

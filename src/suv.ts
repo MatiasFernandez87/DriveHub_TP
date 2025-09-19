@@ -10,17 +10,16 @@ export default class SUV extends Vehiculo{
 
 
     public calcularTarifa(diasTotales: number, kmRecorridos: number): number {
-        const tarifaBase = 80;
-        const conceptoSeguro = (tarifaBase + 15);
+        const tarifaDiaria = (this.tarifaBase + 15);
         const kmPermitidos = 500;
 
-        let tarifa = conceptoSeguro * diasTotales;
+        let tarifa = tarifaDiaria * diasTotales;
 
         if(kmRecorridos > kmPermitidos){
-            const cargoExtra = (kmRecorridos - kmPermitidos)
-            tarifa += cargoExtra * 0.25;
+            const kmExtra = (kmRecorridos - kmPermitidos)
+            tarifa += kmExtra * 0.25;
         }
-        
+
         return tarifa;
     }
 }
