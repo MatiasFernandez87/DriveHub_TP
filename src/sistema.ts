@@ -11,7 +11,7 @@ export default class SistemaDriveHub {
 
     public static crearReserva(cliente: Cliente, vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date)
     {
-        if (this.vehiculo.estaDisponible())
+        if (vehiculo.estaDisponible())
         {
             let reserva = new Reserva(cliente, vehiculo, fechaInicio, fechaFin, vehiculo.getKilometraje());
             this.reservas.push(reserva);
