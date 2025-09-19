@@ -1,0 +1,4 @@
+export enum ESTADO_RESERVA {
+    EN_CURSO,
+    FINALIZADA
+}

@@ -1,10 +1,8 @@
-import {Vehiculo} from "./vehiculo";
-import {estadoVehiculo} from "./estadoVehiculo";
-export class Compacto extends Vehiculo{
-
-    private estado: estadoVehiculo;
+import Vehiculo from "./vehiculo";
+import { ESTADO_VEHICULO } from "./enums/estado_Vehiculo";
+export default class Compacto extends Vehiculo{
     
-    constructor(matricula: string, estado: estadoVehiculo, kilometraje: number){
+    constructor(matricula: string, estado: ESTADO_VEHICULO, kilometraje: number){
         super(matricula, 30, kilometraje, 0.15);
         this.estado = estado;
     }

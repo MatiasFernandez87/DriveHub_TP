@@ -1,9 +1,9 @@
 import Vehiculo from "./vehiculo";
-import {estadoVehiculo} from "./estadoVehiculo";
+import { ESTADO_VEHICULO } from "./enums/estado_Vehiculo";
 
 export default class SUV extends Vehiculo{
     
-    constructor(matricula: string, estado: estadoVehiculo, kilometraje: number){
+    constructor(matricula: string, estado: ESTADO_VEHICULO, kilometraje: number){
         super(matricula, 80, kilometraje, 0.25);
         this.estado = estado;
     }

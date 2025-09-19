@@ -4,16 +4,16 @@
 
 title Diagrama de Clases - DriveHub
 
-enum EstadoVehiculo {
-    Disponible,
-    En_Alquiler,
-    En_Mantenimiento,
-    Necesita_Limpieza
+enum ESTADO_VEHICULO {
+    DISPONIBLE,
+    EN_ALQUILER,
+    EN_MANTENIMIENTO,
+    NECESITA_LIMPIEZA
 }
 
-enum EstadoReserva{
-    En_Curso,
-    Finalizada,
+enum ESTADO_RESERVA{
+    EN_CURSO,
+    FINALIZADA,
 }
 
 abstract class Vehiculo {
