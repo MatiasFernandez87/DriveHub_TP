@@ -1,4 +1,4 @@
-
+import Vehiculo from "./vehiculo";
 import { ESTADO_RESERVA } from "./enums/estado_Reserva"; 
 
 export default class Reserva{
@@ -10,7 +10,7 @@ export default class Reserva{
     private fechaFin: Date;
     private kmInicial: number;
     private kmRecorridos: number;
-    private estadoReserva: EstadoReserva;
+    private estadoReserva: ESTADO_RESERVA;
 
     constructor(vehiculo: Vehiculo, cliente: Cliente, fechaInicio: Date, fechaFin: Date){
 
@@ -19,7 +19,7 @@ export default class Reserva{
         this.cliente = cliente;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
-        this.kmInicial = vehiculo.getKmInicial();
+        this.kmInicial = vehiculo.getKilometraje();
         this.kmRecorridos = 0;
         this.estadoReserva = ESTADO_RESERVA.EN_CURSO;
     }
@@ -28,7 +28,7 @@ export default class Reserva{
         return this.idReserva;
     }
 
-    public getEstado(): EstadoReserva{
+    public getEstado(): ESTADO_RESERVA{
         return this.estadoReserva;
     }
 
