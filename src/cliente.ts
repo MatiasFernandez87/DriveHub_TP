@@ -7,7 +7,7 @@ export default class Cliente {
     private idCliente:number;
     private nombre: string;
     private apellido:string;
-    private reserva: Reserva = undefined;
+    private reserva: Reserva = undefined as unknown as Reserva;
 
     constructor(nombre:string, apellido:string){
         this.idCliente=Cliente.idBase++;
