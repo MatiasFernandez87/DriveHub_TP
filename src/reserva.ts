@@ -1,5 +1,6 @@
 import Vehiculo from "./vehiculo";
 import { ESTADO_RESERVA } from "./enums/estado_Reserva"; 
+import Cliente from "./cliente";
 
 export default class Reserva{
     private static idBase = 0;
