@@ -1,0 +1,104 @@
+@startuml DriveHub
+
+' El diagrama de clases es orientativo, podra sufrir cambios a medida que avance el proyecto.
+
+title Diagrama de Clases - DriveHub
+
+enum ESTADO_VEHICULO {
+    DISPONIBLE,
+    EN_ALQUILER,
+    EN_MANTENIMIENTO,
+    NECESITA_LIMPIEZA
+}
+
+enum ESTADO_RESERVA{
+    EN_CURSO,
+    FINALIZADA,
+}
+
+abstract class Vehiculo {
+    # matricula: string
+    # estado: EstadoVehiculo
+    # tarifaBase: number
+    # kilometraje: number
+    # cargoExtra: number
+
+    + abstract calcularTarifa(diasTotales: number, kmRecorridos: number): number{}
+    + estaDisponible(): boolean
+    + actualizarKilometraje(kilometros: number): void
+
+}
+
+class Compacto extends Vehiculo {
+    + calcularTarifa(diasTotales: number, kmRecorridos: number): number{}
+}
+
+class Sedan extends Vehiculo {
+    + calcularTarifa(diasTotales: number, kmRecorridos: number): number{}
+}
+
+class SUV extends Vehiculo {
+    + calcularTarifa(diasTotales: number, kmRecorridos: number): number{}
+}
+
+class Cliente {
+    - static idBase: number = 1
+    - idCliente: number
+    - nombre: string
+    - apellido: string
+    - reserva: Reserva
+
+    + solicitarReserva(vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date): void
+    + manejar(kilometros: number): void
+    
+}
+
+class Reserva {
+    - idReserva: number
+    - vehiculo: Vehiculo
+    - cliente: Cliente
+    - fechaInicio: Date
+    - fechaFin: Date
+    - kmInicial: number
+    - kmRecorridos: number
+    - estadoReserva: EstadoReserva    
+
+    + registrarUsoVehiculo(kilometros: number): void
+}
+
+class Mantenimiento {
+    - vehiculo: Vehiculo
+    - fecha: Date
+    - costo: number
+}
+
+class SistemaDriveHub {
+    - vehiculos: Vehiculo[]
+    - clientes: Cliente[]
+    - reservas: Reserva[]
+    - mantenimiento: Mantenimiento[]    
+
+    + static crearReserva(cliente: Cliente, vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date)        
+    + asignarMantenimiento(vehiculo: Vehiculo, fecha: Date, costo: number)) 
+
+}
+
+'notas
+note left of SistemaDriveHub::crearReserva
+    Este metodo deberia chequear que el vehiculo este disponible antes de crear la reserva.
+end note
+
+note left of SistemaDriveHub::asignarMantenimiento
+    Este metodo deberia llamar a vehiculo.setEstado() y actualizarlo.
+end note
+
+
+SistemaDriveHub *-- Vehiculo
+SistemaDriveHub *-- Cliente
+SistemaDriveHub *-- Reserva
+SistemaDriveHub *-r- Mantenimiento
+
+Reserva *-r- Cliente
+Reserva *-l- Vehiculo
+
+@enduml
