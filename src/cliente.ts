@@ -51,7 +51,8 @@ export default class Cliente {
     };
 
     public manejar(kilometros: number, dia: Date): void{
-     //Debe registrar la cantidad de kilometros recorridos en un dia indicado.
+        //Debe registrar la cantidad de kilometros recorridos en un dia indicado.
+        this.reserva.registrarUsoVehiculo(kilometros, dia)
     }
     
 }

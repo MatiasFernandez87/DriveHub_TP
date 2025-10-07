@@ -10,7 +10,7 @@ export default class Reserva{
     private fechaInicio: Date;
     private fechaFin: Date;
     private kmInicial: number;
-    private kmRecorridos: number;
+    private kmRecorridos: Map<Date, number> = new Map();
     private estadoReserva: ESTADO_RESERVA;
 
     constructor(vehiculo: Vehiculo, cliente: Cliente, fechaInicio: Date, fechaFin: Date){
@@ -21,7 +21,6 @@ export default class Reserva{
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.kmInicial = vehiculo.getKilometraje();
-        this.kmRecorridos = 0;
         this.estadoReserva = ESTADO_RESERVA.EN_CURSO;
     }
 
@@ -41,8 +40,12 @@ export default class Reserva{
         return this.vehiculo;
     }
 
-    public registrarUsoVehiculo(kilometros: number): void {
-        this.kmRecorridos += kilometros;
+    public getKmRecorridos(): Map<Date, number>{
+        return this.kmRecorridos;
+    }
+
+    public registrarUsoVehiculo(kilometros: number, dia: Date): void {
+        this.kmRecorridos.set(dia, kilometros);
         this.vehiculo.actualizarKilometraje(kilometros);
     }
 }
