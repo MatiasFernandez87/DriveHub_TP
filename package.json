@@ -29,6 +29,7 @@
   },
   "license": "ISC",
   "dependencies": {
+    "jest-mock-extended": "^4.0.0",
     "moment": "^2.30.1"
   }
 }
