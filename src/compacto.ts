@@ -1,5 +1,6 @@
 import Vehiculo from "./vehiculo";
 import { ESTADO_VEHICULO } from "./enums/estado_Vehiculo";
+import Reserva from "./reserva";
 export default class Compacto extends Vehiculo{
     
     constructor(matricula: string, estado: ESTADO_VEHICULO, kilometraje: number){
@@ -7,16 +8,20 @@ export default class Compacto extends Vehiculo{
         this.estado = estado;
     }
 
-public calcularTarifa(diasTotales: number, kmRecorridos: number): number {
-    const tarifaBase = 30;
-    const kmPermitidos = 100 * diasTotales;;
-    let tarifa = tarifaBase * diasTotales;
+public calcularTarifa(reserva: Reserva): number {
+    let diasAlquiler: number = 0;
+    let kmExtra: number = 0;
 
-    if(kmRecorridos > kmPermitidos){
-        const cargoExtra = (kmRecorridos - kmPermitidos)
-        tarifa += cargoExtra * 0.15;
+    for (const valor of reserva.getKmRecorridos().values()) {
+        ++diasAlquiler;
+        if (valor > 100)
+        {
+            kmExtra += valor - 100;            
+        }
     }
-    return tarifa;
+
+    const tarifaFinal = (diasAlquiler * this.tarifaBase) + (kmExtra * this.cargoExtra);
+    return tarifaFinal
 }
 
 }

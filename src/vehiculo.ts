@@ -1,4 +1,5 @@
 import { ESTADO_VEHICULO } from "./enums/estado_Vehiculo";
+import Reserva from "./reserva";
 
 export default abstract class Vehiculo{
     protected matricula: string;
@@ -53,9 +54,6 @@ export default abstract class Vehiculo{
         return this.estado;
     }
 
-
-
-
     public actualizarKilometraje(nuevoKilometraje: number): void {
          this.kilometraje += nuevoKilometraje;
 }
@@ -68,7 +66,6 @@ export default abstract class Vehiculo{
         this.estado = ESTADO_VEHICULO.EN_MANTENIMIENTO;
     }
 
-    public abstract calcularTarifa(diasTotales: number, kmRecorridos: number): number;
-
+    public abstract calcularTarifa(reserva: Reserva): number;        
 
 }

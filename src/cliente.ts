@@ -1,19 +1,21 @@
 import Reserva from "./reserva";
+import SistemaDriveHub from "./sistema";
 import Vehiculo from "./vehiculo";
 import moment from "moment";
 
 export default class Cliente {
-    static idBase:number=1;
-    private idCliente:number;
+    private static idBase: number = 1;
+    private idCliente: number;
     private nombre: string;
-    private apellido:string;
+    private apellido: string;
     private reserva: Reserva = undefined as unknown as Reserva;
+    private readonly sistema: SistemaDriveHub;
 
-    constructor(nombre:string, apellido:string){
-        this.idCliente=Cliente.idBase++;
-        this.nombre=nombre;
-        this.apellido=apellido;
-    
+    constructor(nombre:string, apellido:string, sistema: SistemaDriveHub){
+        this.idCliente = Cliente.idBase++;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.sistema = sistema;    
     }
 
     public getIdCliente():number{
@@ -45,11 +47,12 @@ export default class Cliente {
     }
 
     public solicitarReserva(vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date): void{
-     // Debe llamar al metodo crearReserva() de la clase Sistema.
+        this.sistema.crearReserva(this, vehiculo, fechaInicio, fechaFin);
     };
 
     public manejar(kilometros: number, dia: Date): void{
-     //Debe registrar la cantidad de kilometros recorridos en un dia indicado.
+        //Debe registrar la cantidad de kilometros recorridos en un dia indicado.
+        this.reserva.registrarUsoVehiculo(kilometros, dia)
     }
     
 }

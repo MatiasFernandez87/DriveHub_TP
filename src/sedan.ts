@@ -1,4 +1,5 @@
 import Vehiculo from "./vehiculo";
+import Reserva from "./reserva";
 import { ESTADO_VEHICULO } from "./enums/estado_Vehiculo";
 export default class Sedan extends Vehiculo{
     
@@ -7,9 +8,16 @@ export default class Sedan extends Vehiculo{
         this.estado = estado;
     }
 
-    public calcularTarifa(diasTotales: number, kmRecorridos: number): number {
-     let tarifa = this.tarifaBase +- (kmRecorridos * this.cargoExtra);
+    public calcularTarifa(reserva: Reserva): number {
+        let diasAlquiler: number = 0;
+        let kmRecorrido: number = 0;
 
-        return tarifa;
+        for (const valor of reserva.getKmRecorridos().values()) { 
+            ++diasAlquiler;
+            kmRecorrido += valor;
+        }
+
+        const tarifaFinal = (diasAlquiler * this.tarifaBase) + (kmRecorrido * this.cargoExtra);
+        return tarifaFinal;  
     }
 }
