@@ -9,7 +9,7 @@ export default class Cliente {
     private nombre: string;
     private apellido: string;
     private reserva: Reserva = undefined as unknown as Reserva;
-    private sistema: SistemaDriveHub;
+    private readonly sistema: SistemaDriveHub;
 
     constructor(nombre:string, apellido:string, sistema: SistemaDriveHub){
         this.idCliente = Cliente.idBase++;
@@ -51,7 +51,8 @@ export default class Cliente {
     };
 
     public manejar(kilometros: number, dia: Date): void{
-     //Debe registrar la cantidad de kilometros recorridos en un dia indicado.
+        //Debe registrar la cantidad de kilometros recorridos en un dia indicado.
+        this.reserva.registrarUsoVehiculo(kilometros, dia)
     }
     
 }
