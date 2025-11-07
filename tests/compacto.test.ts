@@ -1,5 +1,6 @@
 import Compacto from '../src/compacto';
 import Reserva from '../src/reserva';
+import { ESTADO_VEHICULO } from '../src/enums/estado_Vehiculo';
 import {DeepMockProxy, mockDeep} from 'jest-mock-extended';
 
 describe('Tests de la clase Compacto', () => {
@@ -32,4 +33,18 @@ describe('Tests de la clase Compacto', () => {
         expect(compacto.calcularTarifa(reservaMock)).toBe(70.5);
     })
 
-})
+    it('Debe poder sumar km correctamente al historial del vehiculo', () => {
+    let kilometraje = 0;
+    compacto.setKilometraje(kilometraje);
+
+    compacto.actualizarKilometraje(200);
+    expect(compacto.getKilometraje()).toBe(200);  
+  });
+
+  it("Debe poder ver el estado del vehiculo disponible", () => {
+    compacto.setEstado(ESTADO_VEHICULO.DISPONIBLE);
+    expect(compacto.getEstado()).toBe(0);    
+  });
+
+});
+
