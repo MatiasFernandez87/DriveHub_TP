@@ -46,5 +46,50 @@ describe('Tests de la clase Compacto', () => {
     expect(compacto.getEstado()).toBe(0);    
   });
 
+  it("Debe setear una matricula correctamente", () => {
+    compacto.setMatricula("XYZ789");
+    expect(compacto.getMatricula()).toBe("XYZ789");    
+  });
+
+  it("Debe setear una tarifa base correctamente", () => {
+    compacto.setTarifaBase(80);
+    expect(compacto.getTarifaBase()).toBe(80);    
+  });
+
+  it("Debe setear un cargo extra correctamente", () => {
+    compacto.setCargoExtra(15);
+    expect(compacto.getCargoExtra()).toBe(15);    
+  });
+
+  it("Debe setear el kilometraje correctamente", () => {
+    compacto.setKilometraje(5000);
+    expect(compacto.getKilometraje()).toBe(5000);    
+  });
+
+  it("Debe poner el vehiculo en mantenimiento", () => {
+    compacto.ponerEnMantenimiento();
+    expect(compacto.getEstado()).toBe(ESTADO_VEHICULO.EN_MANTENIMIENTO);    
+  });
+
+  it("Debe traer una matricula correctamente", () => {
+    expect(compacto.getMatricula()).toBe("XYZ789");    
+  });
+
+  it("Debe traer una tarifa base correctamente", () => {
+    expect(compacto.getTarifaBase()).toBe(80);    
+  });  
+    
+  it("Debe traer un cargo extra correctamente", () => {
+    expect(compacto.getCargoExtra()).toBe(15);    
+  });
+  
+  it("Debe traer un kilometraje correctamente", () => {
+    expect(compacto.getKilometraje()).toBe(5000);
+    });
+
+it("Debe traer el estado del vehiculo correctamente", () => {
+    expect(compacto.getEstado()).toBe(ESTADO_VEHICULO.EN_MANTENIMIENTO);    
+  });
+
 });
 
