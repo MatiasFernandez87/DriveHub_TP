@@ -5,17 +5,46 @@ import SistemaDriveHub from "../src/sistema";
 import Vehiculo from "../src/vehiculo";
 
 describe("Test de la clase cliente", () => {
+
+
+
   let sistemaMock: DeepMockProxy<SistemaDriveHub> = mockDeep<SistemaDriveHub>();
   let cliente = new Cliente("Max", "Verstappen", sistemaMock);
   let vehiculoMock: DeepMockProxy<Vehiculo> = mockDeep<Vehiculo>();
+
+  it("GetIdCliente devuelve el id correcto", () => {
+    expect(cliente.getIdCliente()).toBe(1);
+  })
+
+  it("GetNombre devuelve el nombre correcto", () => {
+    expect(cliente.getNombre()).toBe("Max");
+  })
+
+  it("GetApellido devuelve el apellido correcto", () => {
+    expect(cliente.getApellido()).toBe("Verstappen");
+  })    
+
+  it("getReserva devuelve la reserva correcta", () => {
+    expect(cliente.getReserva()).toBeUndefined();
+  })
+  
+  it("setNombre asigna un nuevo nombre", () => {
+    cliente.setNombre("Lewis");
+    expect(cliente.getNombre()).toBe("Lewis");
+  })  
+
+  it("setApellido asigna un nuevo apellido", () => {
+    cliente.setApellido("Hamilton");
+    expect(cliente.getApellido()).toBe("Hamilton");
+  })
 
   it("Debe ser una instancia de la clase Cliente", () => {
     expect(cliente).toBeInstanceOf(Cliente);
   });
 
   it("Debe tener nombre y apellido asignados", () => {
-    expect(cliente.getNombre()).toBe("Max");
-    expect(cliente.getApellido()).toBe("Verstappen");
+    expect(cliente.getNombre()).toBe("Lewis");
+    expect(cliente.getApellido()).toBe("Hamilton");
   });
 
   it("Debe llamar al metodo crearReserva del sistema", () => {
