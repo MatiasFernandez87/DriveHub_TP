@@ -73,6 +73,5 @@ export default class Reserva{
         {
             return new TemporadaMedia();        
         }       
-        
     }
 }
