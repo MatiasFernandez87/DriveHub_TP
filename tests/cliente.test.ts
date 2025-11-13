@@ -11,6 +11,7 @@ describe("Test de la clase cliente", () => {
   let sistemaMock: DeepMockProxy<SistemaDriveHub> = mockDeep<SistemaDriveHub>();
   let cliente = new Cliente("Max", "Verstappen", sistemaMock);
   let vehiculoMock: DeepMockProxy<Vehiculo> = mockDeep<Vehiculo>();
+  let reservaMock: DeepMockProxy<Reserva> = mockDeep<Reserva>();
 
   it("GetIdCliente devuelve el id correcto", () => {
     expect(cliente.getIdCliente()).toBe(1);
@@ -25,7 +26,8 @@ describe("Test de la clase cliente", () => {
   })    
 
   it("getReserva devuelve la reserva correcta", () => {
-    expect(cliente.getReserva()).toBeUndefined();
+    cliente.setReserva(reservaMock)
+    expect(cliente.getReserva()).toBe(reservaMock);
   })
   
   it("setNombre asigna un nuevo nombre", () => {
