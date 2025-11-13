@@ -66,6 +66,6 @@ export default abstract class Vehiculo{
         this.estado = ESTADO_VEHICULO.EN_MANTENIMIENTO;
     }
 
-    public abstract calcularTarifa(reserva: Reserva): number;        
-
+    public abstract calcularTarifa(reserva: Reserva): number; 
+    
 }
