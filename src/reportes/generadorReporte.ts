@@ -72,11 +72,25 @@ export default class GeneradorDeReporte implements IGeneradorReporte {
   }
 
   public vehiculoMasRentable(vehiculos: Map<Vehiculo, number>): Vehiculo {
-    throw new Error("Method not implemented.");
+    let masRentable: Vehiculo = undefined as unknown as Vehiculo;
+    let max = 0;
+    vehiculos.forEach((rentabilidad, v) => {
+      if (rentabilidad > max) {
+        max = rentabilidad;
+        masRentable = v;
+      }});
+    return masRentable;
   }
 
   public vehiculoMenosRentable(vehiculos: Map<Vehiculo, number>): Vehiculo {
-    throw new Error("Method not implemented.");
+    let menosRentable: Vehiculo = undefined as unknown as Vehiculo;
+    let min = Infinity;
+    vehiculos.forEach((rentabilidad, v) => {
+      if (rentabilidad < min) {
+        min = rentabilidad;
+        menosRentable = v;
+      }});
+    return menosRentable;
   }
 
   public vehiculosOcupados(

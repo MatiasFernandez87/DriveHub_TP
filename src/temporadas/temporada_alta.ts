@@ -1,3 +1,4 @@
+import SistemaDriveHub from "../sistema";
 import ITemporada from "./Itemporada";
 
 export default class TemporadaAlta implements ITemporada{

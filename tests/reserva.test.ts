@@ -45,6 +45,14 @@ describe("Test clase Reserva", () => {
         expect(reserva.getVehiculo()).toBe(vehiculoMock);
     });
 
+    it("getFechaInicio devuelve la fecha de inicio correcta", () => {
+        expect(reserva.getFechaInicio()).toBe(fechaInicio);
+    });
+
+    it("getFechaFin devuelve la fecha de fin correcta", () => {
+        expect(reserva.getFechaFin()).toEqual(fechaFin);
+    });
+
     it("getKmRecorridos debe contener la cantidad exacta", () => {
         reserva.registrarUsoVehiculo(150, new Date());
         reserva.registrarUsoVehiculo(150, new Date());

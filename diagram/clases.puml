@@ -10,6 +10,14 @@ enum ESTADO_RESERVA{
     FINALIZADA,
 }
 
+interface Itemporada{
+    calculoPorTemporada(sistema: SistemaDriveHub): number; 
+}
+
+class temporada_alta implements Itemporada
+class temporada_baja implements Itemporada
+class temporada_media implements Itemporada     
+
 interface INecesitaMantenimiento{
     +necesitaMantenimiento():boolean
 }
