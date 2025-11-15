@@ -93,11 +93,18 @@ export default class GeneradorDeReporte implements IGeneradorReporte {
     return menosRentable;
   }
 
-  public vehiculosOcupados(
-    fechaBusqueda: Date,
-    vehiculo: Vehiculo[],
-    reserva: Reserva[]
-  ): number {
-    throw new Error("Method not implemented.");
+  public vehiculosOcupados(fechaBusqueda: Date,vehiculo: Vehiculo[],reserva: Reserva[]): number {
+     let totalVehiculos = vehiculo.length;
+     let enAlquiler = 0;
+
+
+     const reservasActivas = reserva.filter(r =>
+       moment(fechaBusqueda).isBetween((r.getFechaInicio()), (r.getFechaFin()))
+     );
+
+     enAlquiler = reservasActivas.length;
+
+     return (enAlquiler / totalVehiculos) * 100;
   }
+  
 }
