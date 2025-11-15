@@ -1,7 +1,6 @@
 import Vehiculo from "./vehiculo";
 import Cliente from "./cliente";
 import Reserva from "./reserva";
-import Mantenimiento from "./mantenimiento";
 import IGeneradorReporte from "./reportes/IgeneradorReporte";
 import GeneradorDeReporte from "./reportes/generadorReporte";
 
@@ -9,7 +8,6 @@ export default class SistemaDriveHub {
   private vehiculos: Vehiculo[] = [];
   private clientes: Cliente[] = [];
   private reservas: Reserva[] = [];
-  private mantenimientos: Mantenimiento[] = [];
   private generadorReporte: GeneradorDeReporte = new GeneradorDeReporte();
   private rentabilidadVehiculos: Map<Vehiculo, number> = new Map();
 
@@ -23,11 +21,6 @@ export default class SistemaDriveHub {
     } else {
       throw new Error("El vehiculo no esta disponible.");
     }
-  }
-
-  public asignarMantenimiento(vehiculo: Vehiculo, fecha: Date, costo: number) {
-    this.mantenimientos.push(new Mantenimiento(vehiculo, fecha, costo));
-    vehiculo.enviarAMantenimiento(new Date());
   }
 
   public calcularTarifaFinal(reserva: Reserva): number {
