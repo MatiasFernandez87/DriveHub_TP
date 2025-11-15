@@ -24,7 +24,7 @@ export default class Disponible implements IEstadoVehiculo {
         this.vehiculo.cambiarEstado(new Necesita_Limpieza(this.vehiculo));
     }
     
-    puedeaAlquilar(): boolean {
+    puedeAlquilar(): boolean {
         return true;
     }
 }
