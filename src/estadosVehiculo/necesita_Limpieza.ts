@@ -23,4 +23,8 @@ export default class Necesita_Limpieza implements IEstadoVehiculo {
     asignarLimpieza(): void {
         throw new Error("El vehículo ya está en estado de 'Necesita Limpieza'.");
     }
+
+    puedeaAlquilar(): boolean {
+        return false;
+    }
 }
