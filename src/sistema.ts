@@ -2,7 +2,6 @@ import Vehiculo from './vehiculo';
 import Cliente from './cliente';
 import Reserva from './reserva';
 import Mantenimiento from './mantenimiento';
-import { ESTADO_VEHICULO } from './enums/estado_Vehiculo';
 
 export default class SistemaDriveHub {
     private vehiculos: Vehiculo[] = [];
