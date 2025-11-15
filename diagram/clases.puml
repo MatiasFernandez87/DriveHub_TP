@@ -4,11 +4,12 @@
 
 title Diagrama de Clases - DriveHub
 
+
 enum ESTADO_VEHICULO {
     DISPONIBLE,
     EN_ALQUILER,
     EN_MANTENIMIENTO,
-    NECESITA_LIMPIEZA
+    NECESITA_LIMPIEZA,
 }
 
 enum ESTADO_RESERVA{
@@ -16,17 +17,35 @@ enum ESTADO_RESERVA{
     FINALIZADA,
 }
 
+interface IEstadoVehiculo {
+    + asignarAlquiler() : void
+    + asignarDisponible() : void
+    + asignarMantenimiento() : void
+    + asignarLimpieza() : void
+}
+
+class Disponible implements IEstadoVehiculo
+class En_Alquiler implements IEstadoVehiculo
+class En_Mantenimiento implements IEstadoVehiculo
+class Necesita_Limpieza implements IEstadoVehiculo
+
 abstract class Vehiculo {
-    # matricula: string
-    # estado: EstadoVehiculo
-    # tarifaBase: number
-    # kilometraje: number
-    # cargoExtra: number
+    - matricula : string
+    - tarifaBase : number
+    - kilometraje : number
+    - cargoExtra : number
+    - estadoVehiculo : IEstadoVehiculo
+    --getters y setters--
 
-    + abstract calcularTarifa(diasTotales: number, kmRecorridos: number): number{}
-    + estaDisponible(): boolean
-    + actualizarKilometraje(kilometros: number): void
+    + cambiarEstado(e : IEstadoVehiculo) : void
 
+    + alquilar() : void
+    + devolver() : void
+    + enviarAMantenimiento() : void
+    + limpiar() : void
+
+    + actualizarKilometraje(nuevo:number) : void
+    + calcularTarifa(reserva) : number
 }
 
 class Compacto extends Vehiculo {
@@ -97,6 +116,7 @@ SistemaDriveHub *-- Vehiculo
 SistemaDriveHub *-- Cliente
 SistemaDriveHub *-- Reserva
 SistemaDriveHub *-r- Mantenimiento
+Vehiculo *-- IEstadoVehiculo
 
 Reserva *-r- Cliente
 Reserva *-l- Vehiculo
