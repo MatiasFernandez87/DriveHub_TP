@@ -55,15 +55,15 @@ export default class Reserva {
     return this.temporada;
   }
 
-    public getKmRecorridos(): Map<Date, number>{
+  public getKmRecorridos(): Map<Date, number>{
         return this.kmRecorridos;
     }
 
-    public getFechaInicio(): Date{
+  public getFechaInicio(): Date{
         return this.fechaInicio;
     }
 
-    public getFechaFin(): Date{
+  public getFechaFin(): Date{
         return this.fechaFin;
     }   
 
@@ -86,11 +86,4 @@ export default class Reserva {
     }
   }
 
-  public getFechaInicio(): Date {
-    return this.fechaInicio;
-  }
-
-  public getFechaFin(): Date {
-    return this.fechaFin;
-  }
 }
