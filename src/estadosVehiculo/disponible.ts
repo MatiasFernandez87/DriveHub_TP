@@ -11,17 +11,17 @@ export default class Disponible implements IEstadoVehiculo {
         return false;
     }
 
-    asignarAlquiler(): void {
-        this.vehiculo.cambiarEstado(new En_Alquiler(this.vehiculo));
-    }
+  asignarAlquiler(): void {
+    this.vehiculo.cambiarEstado(new En_Alquiler(this.vehiculo));
+  }
 
-    asignarDisponible(): void {
-        throw new Error("El vehículo ya está disponible.");
-    }
+  asignarDisponible(): void {
+    throw new Error("El vehículo ya está disponible.");
+  }
 
-    asignarMantenimiento(): void {
-        this.vehiculo.cambiarEstado(new En_Mantenimiento(this.vehiculo));
-    }
+  asignarMantenimiento(): void {
+    this.vehiculo.cambiarEstado(new En_Mantenimiento(this.vehiculo));
+  }
 
     asignarLimpieza(): void {
         this.vehiculo.cambiarEstado(new Necesita_Limpieza(this.vehiculo));
