@@ -7,6 +7,9 @@ import Necesita_Limpieza from "./necesita_Limpieza";
 export default class En_Alquiler implements IEstadoVehiculo {
 
     constructor(private vehiculo: Vehiculo) {}
+    estaEnMantenimiento(): boolean {
+        return false;
+    }
 
     asignarAlquiler(): void {
         throw new Error("El vehículo ya está en alquiler.");
@@ -24,7 +27,7 @@ export default class En_Alquiler implements IEstadoVehiculo {
         this.vehiculo.cambiarEstado(new Necesita_Limpieza(this.vehiculo));
     }
 
-    puedeaAlquilar(): boolean {
+    puedeAlquilar(): boolean {
         return false;
     }
 }
