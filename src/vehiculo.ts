@@ -17,9 +17,10 @@ export default abstract class Vehiculo{
     protected cantidadViajes: number;
     protected fechaUltimoMantenimiento:Date = undefined as unknown as Date;
     protected condicionesMantenimiento : INecesitaMantenimiento[] = [new KilometrosParaMantenimiento(), new CantViajes(), new UltimoMantenimiento()];
-    
+    protected costoTotalMantenimiento : number;
+    protected costoPorMantenimiento : number;
 
-    constructor(matricula: string, tarifaBase: number, kilometraje: number, cargoExtra: number) {
+    constructor(matricula: string, tarifaBase: number, kilometraje: number, cargoExtra: number, costoPorMantenimiento : number) {
         this.matricula = matricula;
         this.tarifaBase = tarifaBase;
         this.kilometraje = kilometraje;
@@ -27,6 +28,8 @@ export default abstract class Vehiculo{
         this.estadoVehiculo = new Disponible(this);
         this.kmUltimoMantenimiento = 0;
         this.cantidadViajes = 0;
+        this.costoTotalMantenimiento = 0;
+        this.costoPorMantenimiento = costoPorMantenimiento;
     }
 
 
@@ -35,13 +38,17 @@ export default abstract class Vehiculo{
             if(r.necesitaMantenimiento(this)){
                 this.enviarAMantenimiento(new Date());
                 this.fechaUltimoMantenimiento = new Date();
+                this.setCostoTotalMantenimiento(this.costoPorMantenimiento);
                 return;
             }
         }
         this.devolver();
     }
 
-  
+    public getCostoTotalMantenimiento() : number{
+      return this.costoTotalMantenimiento;
+    }
+
     public getMatricula(): string {
         return this.matricula;
     }
@@ -95,6 +102,9 @@ export default abstract class Vehiculo{
         return this.kmUltimoMantenimiento;
     }
 
+    public setCostoTotalMantenimiento(costoMantenimiento : number) : void{
+      this.costoTotalMantenimiento += costoMantenimiento;
+    }
     
     public setMatricula(matricula: string): void {
         this.matricula = matricula;
