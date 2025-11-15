@@ -5,23 +5,27 @@
 title Diagrama de Clases - DriveHub
 
 
-enum ESTADO_VEHICULO {
-    DISPONIBLE,
-    EN_ALQUILER,
-    EN_MANTENIMIENTO,
-    NECESITA_LIMPIEZA,
-}
-
 enum ESTADO_RESERVA{
     EN_CURSO,
     FINALIZADA,
 }
+
+interface INecesitaMantenimiento{
+    +necesitaMantenimiento():boolean
+}
+
+class cantViajes implements INecesitaMantenimiento
+class kilometrosParaMantenimiento implements INecesitaMantenimiento
+class ultimoMantenimeinto implements INecesitaMantenimiento
 
 interface IEstadoVehiculo {
     + asignarAlquiler() : void
     + asignarDisponible() : void
     + asignarMantenimiento() : void
     + asignarLimpieza() : void
+
+    + puedeAlquilar() : boolean
+    + estaEnMantenimiento() : boolean 
 }
 
 class Disponible implements IEstadoVehiculo
@@ -35,10 +39,15 @@ abstract class Vehiculo {
     - kilometraje : number
     - cargoExtra : number
     - estadoVehiculo : IEstadoVehiculo
+    - kmUltimoMantenimiento : number
+    - cantViajes : number
+    - fechaUltimoMantenimiento: Date
+    - condicionesMantenimiento: INecesitaMantenimiento[]
+
     --getters y setters--
 
-    + cambiarEstado(e : IEstadoVehiculo) : void
-
+    + cambiarEstado(estado : IEstadoVehiculo) : void
+    + necesitaMantenimiento() : void
     + alquilar() : void
     + devolver() : void
     + enviarAMantenimiento() : void
@@ -117,6 +126,7 @@ SistemaDriveHub *-- Cliente
 SistemaDriveHub *-- Reserva
 SistemaDriveHub *-r- Mantenimiento
 Vehiculo *-- IEstadoVehiculo
+Vehiculo *-- INecesitaMantenimiento
 
 Reserva *-r- Cliente
 Reserva *-l- Vehiculo
