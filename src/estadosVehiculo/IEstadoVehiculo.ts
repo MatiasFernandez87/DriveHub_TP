@@ -3,5 +3,7 @@ export default interface IEstadoVehiculo {
     asignarDisponible(): void;
     asignarMantenimiento(): void;
     asignarLimpieza(): void;
+    
     puedeAlquilar(): boolean;
+    estaEnMantenimiento(): boolean;
 }

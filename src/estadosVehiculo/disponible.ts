@@ -7,6 +7,9 @@ import Necesita_Limpieza from "./necesita_Limpieza";
 export default class Disponible implements IEstadoVehiculo {
 
     constructor(private vehiculo: Vehiculo) {}
+    estaEnMantenimiento(): boolean {
+        return false;
+    }
 
     asignarAlquiler(): void {
         this.vehiculo.cambiarEstado(new En_Alquiler(this.vehiculo));
@@ -27,4 +30,6 @@ export default class Disponible implements IEstadoVehiculo {
     puedeAlquilar(): boolean {
         return true;
     }
+
+    
 }
