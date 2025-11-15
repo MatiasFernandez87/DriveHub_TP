@@ -4,7 +4,7 @@ import Reserva from "./reserva";
 export default class SUV extends Vehiculo{
     
     constructor(matricula: string,  kilometraje: number){
-        super(matricula, 80, kilometraje, 0.25);
+        super(matricula, 80, kilometraje, 0.25, 2500);
     }
 
 

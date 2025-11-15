@@ -30,4 +30,8 @@ export default class En_Alquiler implements IEstadoVehiculo {
     puedeAlquilar(): boolean {
         return false;
     }
+
+    estaAlquilado(): boolean{
+        return true
+    }
 }

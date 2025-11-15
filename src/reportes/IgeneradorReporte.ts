@@ -5,18 +5,16 @@ export default interface IGeneradorReporte {
   vehiculoMasAlquilado(
     fechaInicio: Date,
     fechaFin: Date,
-    vehiculo: Vehiculo[],
     reserva: Reserva[]
   ): Vehiculo;
   vehiculoMenosAlquilado(
     fechaInicio: Date,
     fechaFin: Date,
-    vehiculo: Vehiculo[],
     reserva: Reserva[]
   ): Vehiculo;
   vehiculoMasRentable(vehiculos: Map<Vehiculo, number>): Vehiculo;
   vehiculoMenosRentable(vehiculos: Map<Vehiculo, number>): Vehiculo;
-  vehiculoOcupados(
+  vehiculosOcupados(
     fechaBusqueda: Date,
     vehiculo: Vehiculo[],
     reserva: Reserva[]

@@ -3,7 +3,7 @@ import Reserva from "./reserva";
 export default class Sedan extends Vehiculo{
     
         constructor(matricula: string, kilometraje: number){
-        super(matricula, 30, kilometraje, 0.20);
+        super(matricula, 30, kilometraje, 0.20, 2000);
     }
 
     public calcularTarifa(reserva: Reserva): number {

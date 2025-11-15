@@ -2,6 +2,8 @@ import Compacto from "../src/compacto";
 import Reserva from "../src/reserva";
 import { DeepMockProxy, mockDeep } from "jest-mock-extended";
 
+//Aca estan los Test de COMPACTO.TS ,VEHICULO.TS y INECESITAMANTENIMIENTO.TS
+
 describe("Tests de la clase Compacto", () => {
   let compacto: Compacto;
 
