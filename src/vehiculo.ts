@@ -46,17 +46,17 @@ export default abstract class Vehiculo{
         return this.matricula;
     }
 
-    public getTarifaBase(): number {
-        return this.tarifaBase;
-    }
+  public getTarifaBase(): number {
+    return this.tarifaBase;
+  }
 
-    public getKilometraje(): number {
-        return this.kilometraje;
-    }
+  public getKilometraje(): number {
+    return this.kilometraje;
+  }
 
-    public getCargoExtra(): number {
-        return this.cargoExtra;
-    }
+  public getCargoExtra(): number {
+    return this.cargoExtra;
+  }
 
     public getEstado(): IEstadoVehiculo {
         
@@ -101,22 +101,21 @@ export default abstract class Vehiculo{
         this.matricula = matricula;
     }
 
-    public setTarifaBase(tarifaBase: number): void {
-        this.tarifaBase = tarifaBase;
-    }
+  public setTarifaBase(tarifaBase: number): void {
+    this.tarifaBase = tarifaBase;
+  }
 
-    public setKilometraje(kilometraje: number): void {
-        this.kilometraje = kilometraje;
-    }
+  public setKilometraje(kilometraje: number): void {
+    this.kilometraje = kilometraje;
+  }
 
-    public setCargoExtra(cargoExtra: number): void {
-        this.cargoExtra = cargoExtra;
-    }
+  public setCargoExtra(cargoExtra: number): void {
+    this.cargoExtra = cargoExtra;
+  }
 
-    
-    public actualizarKilometraje(nuevo: number): void {
-        this.kilometraje += nuevo;
-    }
+  public actualizarKilometraje(nuevo: number): void {
+    this.kilometraje += nuevo;
+  }
 
     public cambiarEstado(estado: IEstadoVehiculo): void {
         this.estadoVehiculo = estado;
@@ -128,19 +127,18 @@ export default abstract class Vehiculo{
         this.cantidadViajes++;
     }
 
-    public devolver(): void {
-        this.estadoVehiculo.asignarDisponible();
-    }
+  public devolver(): void {
+    this.estadoVehiculo.asignarDisponible();
+  }
 
     public enviarAMantenimiento(ingreso : Date): void {
         this.fechaUltimoMantenimiento = ingreso;
         this.estadoVehiculo.asignarMantenimiento();
     }
 
-    public limpiar(): void {
-        this.estadoVehiculo.asignarLimpieza();
-    } 
+  public limpiar(): void {
+    this.estadoVehiculo.asignarLimpieza();
+  }
 
-    
-    public abstract calcularTarifa(reserva: Reserva): number;
+  public abstract calcularTarifa(reserva: Reserva): number;
 }
