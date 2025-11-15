@@ -23,4 +23,8 @@ export default class En_Alquiler implements IEstadoVehiculo {
     asignarLimpieza(): void {
         this.vehiculo.cambiarEstado(new Necesita_Limpieza(this.vehiculo));
     }
+
+    puedeaAlquilar(): boolean {
+        return false;
+    }
 }

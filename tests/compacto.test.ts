@@ -84,5 +84,14 @@ describe('Tests de la clase Compacto', () => {
     expect(compacto.getEstado().constructor.name).toBe("En_Alquiler");   
   });
 
+  it("puedeaAlquilar debe devolver true si el vehiculo esta disponible", () => {
+    expect(compacto.getEstado().puedeaAlquilar()).toBe(true);
+  });
+
+  it("puedeaAlquilar debe devolver false si el vehiculo no esta disponible", () => {
+    compacto.enviarAMantenimiento();
+    expect(compacto.getEstado().puedeaAlquilar()).toBe(false);
+  });
+
 });
 
