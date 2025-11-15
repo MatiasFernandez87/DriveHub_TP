@@ -55,6 +55,14 @@ export default class Reserva{
         return this.kmRecorridos;
     }
 
+    public getFechaInicio(): Date{
+        return this.fechaInicio;
+    }
+
+    public getFechaFin(): Date{
+        return this.fechaFin;
+    }   
+
     public registrarUsoVehiculo(kilometros: number, dia: Date): void {
         this.kmRecorridos.set(dia, kilometros);
         this.vehiculo.actualizarKilometraje(kilometros);
