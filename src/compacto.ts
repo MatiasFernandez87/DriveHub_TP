@@ -3,7 +3,7 @@ import Reserva from "./reserva";
 export default class Compacto extends Vehiculo{
     
     constructor(matricula: string, kilometraje: number){
-        super(matricula, 30, kilometraje, 0.15);
+        super(matricula, 30, kilometraje, 0.15, 1500);
 
     }
 
