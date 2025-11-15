@@ -2,12 +2,16 @@ import Vehiculo from "./vehiculo";
 import Cliente from "./cliente";
 import Reserva from "./reserva";
 import Mantenimiento from "./mantenimiento";
+import IGeneradorReporte from "./reportes/IgeneradorReporte";
+import GeneradorDeReporte from "./reportes/generadorReporte";
 
 export default class SistemaDriveHub {
   private vehiculos: Vehiculo[] = [];
   private clientes: Cliente[] = [];
   private reservas: Reserva[] = [];
   private mantenimientos: Mantenimiento[] = [];
+  private generadorReporte: GeneradorDeReporte = new GeneradorDeReporte();
+
 
   public crearReserva(
     cliente: Cliente,
@@ -38,5 +42,10 @@ export default class SistemaDriveHub {
     reserva.getVehiculo().necesitaMantenimiento();
 
     return tarifaFinal;
+  }
+
+  public reporteVehiculosOcupados(fechaBusqueda: Date): number {
+    const ocupados = this.generadorReporte.vehiculosOcupados(fechaBusqueda, this.vehiculos, this.reservas)
+    return ocupados;
   }
 }

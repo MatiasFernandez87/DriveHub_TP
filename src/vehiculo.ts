@@ -58,19 +58,18 @@ export default abstract class Vehiculo{
     return this.cargoExtra;
   }
 
-    public getEstado(): IEstadoVehiculo {
-        
-         if (this.estadoVehiculo.estaEnMantenimiento()) {
+  public getEstado(): IEstadoVehiculo {
+      
+    if (this.estadoVehiculo.estaEnMantenimiento()) {
 
-        const hace24hs = moment().subtract(24, "hours");
+    const hace24hs = moment().subtract(24, "hours");
 
-        if (moment(this.fechaUltimoMantenimiento).isBefore(hace24hs)) {
-            this.devolver();
-        }
-    }
-
+      if (moment(this.fechaUltimoMantenimiento).isBefore(hace24hs)) {
+          this.devolver();
+      }
+  }
         return this.estadoVehiculo;
-    }
+  }
 
     public setKmUltimoMantenimiento(km: number): void {
         this.kmUltimoMantenimiento = km;
