@@ -9,7 +9,12 @@ export default class SistemaDriveHub {
   private reservas: Reserva[] = [];
   private mantenimientos: Mantenimiento[] = [];
 
-  public crearReserva(cliente: Cliente, vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date) {
+  public crearReserva(
+    cliente: Cliente,
+    vehiculo: Vehiculo,
+    fechaInicio: Date,
+    fechaFin: Date
+  ) {
     if (vehiculo.getEstado().puedeAlquilar()) {
       let reserva = new Reserva(vehiculo, cliente, fechaInicio, fechaFin);
       this.reservas.push(reserva);
@@ -22,7 +27,7 @@ export default class SistemaDriveHub {
 
   public asignarMantenimiento(vehiculo: Vehiculo, fecha: Date, costo: number) {
     this.mantenimientos.push(new Mantenimiento(vehiculo, fecha, costo));
-    vehiculo.enviarAMantenimiento();
+    vehiculo.enviarAMantenimiento(new Date());
   }
 
   public calcularTarifaFinal(reserva: Reserva): number {
@@ -31,7 +36,7 @@ export default class SistemaDriveHub {
     const tarifaFinal = tarifaBase * porcentajeTemporada;
 
     reserva.getVehiculo().necesitaMantenimiento();
-    
+
     return tarifaFinal;
   }
 }

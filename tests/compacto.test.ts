@@ -70,8 +70,8 @@ describe("Tests de la clase Compacto", () => {
   });
 
   it("Debe cambiar el estado del vehiculo a 'enMantenimiento' ", () => {
-    compacto.enviarAMantenimiento();
-    expect(compacto.getEstado().constructor.name).toBe("En_Mantenimiento");
+    compacto.enviarAMantenimiento(new Date());
+    expect(compacto.getEstado().constructor.name).toBe("En_Mantenimiento");   
   });
 
   it("Debe cambiar el estado del vehiculo a 'necesitaLimpieza' ", () => {
@@ -89,7 +89,7 @@ describe("Tests de la clase Compacto", () => {
   });
 
   it("puedeaAlquilar debe devolver false si el vehiculo no esta disponible", () => {
-    compacto.enviarAMantenimiento();
+    compacto.enviarAMantenimiento(new Date);
     expect(compacto.getEstado().puedeAlquilar()).toBe(false);
   });
 });

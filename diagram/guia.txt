@@ -1,0 +1,41 @@
+1. Tarifas Variables por Temporada:
+Definición de Temporadas: El sistema debe reconocer diferentes temporadas con
+distintas tarifas (e.g., "Temporada Baja", "Temporada Media", "Temporada Alta").
+Lógica de Variación: La tarifa diaria base de cada vehículo (Compacto, Sedán, SUV)
+se ajustará según la temporada en la que se defina la fechaInicio de la reserva.
+Temporada Baja: -10% sobre la tarifa base diaria.
+Temporada Media: Tarifa base diaria estándar.
+Temporada Alta: +20% sobre la tarifa base diaria.
+
+2. Criterios de Mantenimiento de Vehículos:
+Disparadores de Mantenimiento: Un vehículo debe pasar a estado "En
+Mantenimiento" y ser inhabilitado para nuevas reservas automáticamente bajo
+cualquiera de las siguientes condiciones:
+Ha superado los 10.000 km desde su último mantenimiento.
+Han pasado 12 meses desde su último mantenimiento.
+Después de cada 5 alquileres completados.
+
+3. Gestión de los Vehículo:
+Desde la administración de DriveHub, nos comentan que debido a algunos errores de
+manejo en la administración de los vehículos, hubo casos en los que algunos clientes
+intentaron reservar un auto que se encontraba alquilado o en mantenimiento. Debido a
+estos errores se desea implementar un mecanismo que restrinja las operaciones que
+se pueden realizar sobre un vehículo. Para esto se desea implementar las siguientes
+reglas de negocio:
+Si un vehículo se encuentra:
+Disponible : Puede ser alquilado.
+En Alquiler : Está siendo usado por un cliente. No puede ser alquilado.
+En Mantenimiento : No puede ser alquilado.
+Y las siguientes reglas de transición:
+Manejo de Operaciones Inválidas: Cuando se intenta una operación no es permitida
+(ej. reservar un auto "En Mantenimiento"), el sistema debe informar el error de una
+manera apropiada y clara.
+
+4. Estadísticas y Reportes:
+Vehículos más/menos alquilados: El automóvil que más y menos veces fue
+alquilado en un período determinado.
+Rentabilidad por Vehículo: El automóvil que generó la mayor y menor rentabilidad
+(ingresos por alquiler - costos de mantenimiento).
+Ocupación de la Flota: El porcentaje de vehículos que se encuentran "En Alquiler" en
+un momento dado.
+
