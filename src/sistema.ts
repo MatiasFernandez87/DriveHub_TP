@@ -24,4 +24,14 @@ export default class SistemaDriveHub {
     this.mantenimientos.push(new Mantenimiento(vehiculo, fecha, costo));
     vehiculo.enviarAMantenimiento();
   }
+
+  public calcularTarifaFinal(reserva: Reserva): number {
+    const tarifaBase = reserva.getVehiculo().calcularTarifa(reserva);
+    const porcentajeTemporada = reserva.getTemporada().calculoPorTemporada();
+    const tarifaFinal = tarifaBase * porcentajeTemporada;
+
+    reserva.getVehiculo().necesitaMantenimiento();
+    
+    return tarifaFinal;
+  }
 }
