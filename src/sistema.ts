@@ -45,7 +45,7 @@ export default class SistemaDriveHub {
   private asignarRentabilidad(vehiculo: Vehiculo, tarifaFinal: number)
   {
 	const rentabilidadActual = this.rentabilidadVehiculos.get(vehiculo) ?? 0;
-	this.rentabilidadVehiculos.set(vehiculo, rentabilidadActual + tarifaFinal);
+	this.rentabilidadVehiculos.set(vehiculo, (rentabilidadActual + tarifaFinal) - vehiculo.getCostoTotalMantenimiento());
   }
 
   public reporteVehiculosOcupados(fechaBusqueda: Date): number {
@@ -61,5 +61,16 @@ export default class SistemaDriveHub {
   public reporteVehiculoMenosAlquilado(fechaInicio: Date, fechaFin: Date): Vehiculo {
     const vehiculoMenosAlquilado = this.generadorReporte.vehiculoMenosAlquilado(fechaInicio, fechaFin, this.reservas)
     return vehiculoMenosAlquilado;
-  }
+	}
+	
+	public reporteVehiculoMasRentable(): Vehiculo {
+		const vehiculoMasRentable = this.generadorReporte.vehiculoMasRentable(this.rentabilidadVehiculos)
+		return vehiculoMasRentable;
+	}
+
+	public reporteVehiculoMenosRentable(): Vehiculo {
+		const vehiculoMenosRentable = this.generadorReporte.vehiculoMenosRentable(this.rentabilidadVehiculos)
+		return vehiculoMenosRentable;
+	}
+
 }
