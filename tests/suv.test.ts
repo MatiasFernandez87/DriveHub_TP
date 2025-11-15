@@ -4,7 +4,7 @@ import {DeepMockProxy, mockDeep} from 'jest-mock-extended';
 
 describe('Tests de la clase SUV', () => {
 
-    let suv = new SUV("ABC123", 0, 15000);
+    let suv = new SUV("ABC123", 15000);
 
     it('Debe ser una instancia de la clase SUV',() => {
         expect(suv).toBeInstanceOf(SUV);

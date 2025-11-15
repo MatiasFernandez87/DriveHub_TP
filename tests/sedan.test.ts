@@ -4,7 +4,7 @@ import {DeepMockProxy, mockDeep} from 'jest-mock-extended';
 
 describe('Tests de la clase Sedan', () => {
 
-    let sedan = new Sedan("XYZ789", 0, 20000);
+    let sedan = new Sedan("XYZ789",  20000);
 
 
     it('Debe ser una instancia de clase Sedan', () =>{
