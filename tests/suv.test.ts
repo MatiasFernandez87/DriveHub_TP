@@ -43,19 +43,18 @@ describe('Tests de la clase SUV', () => {
     });
 
     it("NO debe enviar a mantenimiento si no cumple ninguna regla", () => {
-    // Simulamos que el vehículo estaba alquilado
+    
     suv.alquilar();
 
-    // Configuramos valores que NO disparan mantenimiento
+    
     suv.setCantidadViajes(1);
     suv.setKmUltimoMantenimiento(0);
     suv.setKilometraje(5000);
     suv.setFechaUltimoMantenimiento(moment().toDate());
 
-    // Al finalizar la reserva se ejecuta esta lógica
+   
     suv.necesitaMantenimiento();
 
-    // Como NO necesita mantenimiento → se devuelve → pasa a Disponible
     expect(suv.getEstado().constructor.name).toBe("Disponible");
 });
 it("Debe enviar a mantenimiento si excede viajes", () => {

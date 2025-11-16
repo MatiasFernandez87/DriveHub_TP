@@ -15,9 +15,7 @@ describe("Tests del estado En_Alquiler", () => {
         estado = new En_Alquiler(vehiculoMock);
     });
 
-    // -------------------------------
-    //  MÉTODOS BOOLEANOS
-    // -------------------------------
+    
 
     it("estaEnMantenimiento() debe devolver false", () => {
         expect(estado.estaEnMantenimiento()).toBe(false);
@@ -31,9 +29,6 @@ describe("Tests del estado En_Alquiler", () => {
         expect(estado.estaAlquilado()).toBe(true);
     });
 
-    // -------------------------------
-    //  MÉTODOS QUE LANZAN ERRORES
-    // -------------------------------
 
     it("Debe lanzar error al intentar asignarAlquiler() nuevamente", () => {
         expect(() => estado.asignarAlquiler()).toThrow(
@@ -41,9 +36,7 @@ describe("Tests del estado En_Alquiler", () => {
         );
     });
 
-    // -------------------------------
-    //  CAMBIOS DE ESTADO
-    // -------------------------------
+   
 
     it("Debe cambiar el estado a Disponible al ejecutar asignarDisponible()", () => {
         estado.asignarDisponible();
