@@ -1,4 +1,4 @@
-# DriveHub_TP
+# DriveHub_TP - Grupo 1 - Federico Gomez, Alan Coronel, Agustin Belmonte y Matias Fernandez.
 #  DriveHub – Sistema Integral de Gestión de Alquiler de Vehículos
 
 DriveHub es un sistema orientado a objetos para la administración completa de una flota de vehículos, incluyendo reservas, cálculo de tarifas, gestión de mantenimiento, control de estados y reportes de uso/rentabilidad.
