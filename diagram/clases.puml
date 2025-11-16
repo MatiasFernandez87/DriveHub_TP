@@ -4,29 +4,71 @@
 
 title Diagrama de Clases - DriveHub
 
-enum ESTADO_VEHICULO {
-    DISPONIBLE,
-    EN_ALQUILER,
-    EN_MANTENIMIENTO,
-    NECESITA_LIMPIEZA
-}
 
 enum ESTADO_RESERVA{
     EN_CURSO,
     FINALIZADA,
 }
 
+interface ITemporada{
+    calculoPorTemporada(sistema: SistemaDriveHub): number; 
+}
+
+class temporada_alta implements ITemporada
+class temporada_baja implements ITemporada
+class temporada_media implements ITemporada     
+
+interface INecesitaMantenimiento{
+    + necesitaMantenimiento():boolean
+}
+
+class cantViajes implements INecesitaMantenimiento
+class kilometrosParaMantenimiento implements INecesitaMantenimiento
+class ultimoMantenimeinto implements INecesitaMantenimiento
+
+interface IEstadoVehiculo {
+    + asignarAlquiler() : void
+    + asignarDisponible() : void
+    + asignarMantenimiento() : void
+    + asignarLimpieza() : void
+
+    + puedeAlquilar() : boolean
+    + estaEnMantenimiento() : boolean 
+}
+
+class Disponible implements IEstadoVehiculo
+class En_Alquiler implements IEstadoVehiculo{
+    + estaAlquilado : boolean
+}
+class En_Mantenimiento implements IEstadoVehiculo{
+    + estaEnMantenimiento : boolean
+}
+class Necesita_Limpieza implements IEstadoVehiculo
+
 abstract class Vehiculo {
-    # matricula: string
-    # estado: EstadoVehiculo
-    # tarifaBase: number
-    # kilometraje: number
-    # cargoExtra: number
+    # matricula : string
+    # tarifaBase : number
+    # kilometraje : number
+    # cargoExtra : number
+    # estadoVehiculo : IEstadoVehiculo
+    # kmUltimoMantenimiento : number
+    # cantViajes : number
+    # fechaUltimoMantenimiento: Date
+    # condicionesMantenimiento: INecesitaMantenimiento[]
+    # costoTotalMantenimiento : number
+    # costoPorMantenimiento: number
 
-    + abstract calcularTarifa(diasTotales: number, kmRecorridos: number): number{}
-    + estaDisponible(): boolean
-    + actualizarKilometraje(kilometros: number): void
+    --setters y getters--
 
+    + cambiarEstado(estado : IEstadoVehiculo) : void
+    + necesitaMantenimiento() : void
+    + alquilar() : void
+    + devolver() : void
+    + enviarAMantenimiento() : void
+    + limpiar() : void
+    
+    + actualizarKilometraje(nuevo:number) : void
+    + calcularTarifa(reserva) : number
 }
 
 class Compacto extends Vehiculo {
@@ -47,6 +89,9 @@ class Cliente {
     - nombre: string
     - apellido: string
     - reserva: Reserva
+    - readonly: SistemaDriveHub
+    
+    ----setters y getters ----
 
     + solicitarReserva(vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date): void
     + manejar(kilometros: number): void
@@ -54,6 +99,7 @@ class Cliente {
 }
 
 class Reserva {
+    - static idBase : number
     - idReserva: number
     - vehiculo: Vehiculo
     - cliente: Cliente
@@ -62,41 +108,55 @@ class Reserva {
     - kmInicial: number
     - kmRecorridos: number
     - estadoReserva: EstadoReserva    
+    - temporada : ITemporada
+
+    ----setters y getters ----
 
     + registrarUsoVehiculo(kilometros: number): void
+    
 }
 
-class Mantenimiento {
-    - vehiculo: Vehiculo
-    - fecha: Date
-    - costo: number
-}
+
 
 class SistemaDriveHub {
     - vehiculos: Vehiculo[]
     - clientes: Cliente[]
     - reservas: Reserva[]
-    - mantenimiento: Mantenimiento[]    
+    - mantenimiento: Mantenimiento[] 
+    - generadorReporte : GeneradorDeReporte
+    - rentabilidadVehiculos : MAP()   
+    
+    ---setters y getters-----
 
-    + static crearReserva(cliente: Cliente, vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date)        
+    + crearReserva(cliente: Cliente, vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date)   
+    + calcularTarifaFinal(reserva : Reserva) : number
+    - asignarRentabilidad (vehiculo: Vehiculo, tarifaFinal: number)
+    + reporteVehiculosOcupados(fechaBusqueda : Date) : number)
+    + reporteVehiculoMasAlquilado(fechaInicio: Date, fechaFin: Date): Vehiculo
+    + reporteVehiculoMenosAlquilado(fechaInicio: Date, fechaFin: Date): Vehiculo
+    + reporteVehiculoMasRentable() : Vehiculo
+    + reporteVehiculoMenosRentable() : Vehiculo
     + asignarMantenimiento(vehiculo: Vehiculo, fecha: Date, costo: number)) 
 
 }
 
 'notas
-note left of SistemaDriveHub::crearReserva
-    Este metodo deberia chequear que el vehiculo este disponible antes de crear la reserva.
-end note
+' note left of SistemaDriveHub::crearReserva
+'     Este metodo deberia chequear que el vehiculo este disponible antes de crear la reserva.
+' end note
 
-note left of SistemaDriveHub::asignarMantenimiento
-    Este metodo deberia llamar a vehiculo.setEstado() y actualizarlo.
-end note
+' note left of SistemaDriveHub::asignarMantenimiento
+'     Este metodo deberia llamar a vehiculo.setEstado() y actualizarlo.
+' end note
 
 
 SistemaDriveHub *-- Vehiculo
 SistemaDriveHub *-- Cliente
 SistemaDriveHub *-- Reserva
-SistemaDriveHub *-r- Mantenimiento
+Reserva *-- ESTADO_RESERVA
+Vehiculo *-- IEstadoVehiculo
+Vehiculo *-- INecesitaMantenimiento
+Reserva *-- ITemporada
 
 Reserva *-r- Cliente
 Reserva *-l- Vehiculo
