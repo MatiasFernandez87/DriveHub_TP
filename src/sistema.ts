@@ -64,6 +64,26 @@ export default class SistemaDriveHub {
 	public reporteVehiculoMenosRentable(): Vehiculo {
 		const vehiculoMenosRentable = this.generadorReporte.vehiculoMenosRentable(this.rentabilidadVehiculos)
 		return vehiculoMenosRentable;
-	}
+  }
+  
+  public getVehiculos(): Vehiculo[] {
+    return this.vehiculos;
+  }
+  
+  public getClientes(): Cliente[] {
+    return this.clientes;
+  }
+  
+  public getReservas(): Reserva[] {
+    return this.reservas;
+  }
+  
+  public getGeneradorReporte(): IGeneradorReporte {
+    return this.generadorReporte;
+  }
+
+  public setGeneradorReporte(generadorReporte: IGeneradorReporte): void {
+    this.generadorReporte = generadorReporte;
+  }
 
 }
