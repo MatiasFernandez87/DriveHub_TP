@@ -1,0 +1,12 @@
+{
+  "entryPoints": ["./src"],
+  "out": "docs",
+  "tsconfig": "./tsconfig.json",
+  "exclude": [
+    "**/node_modules/**",
+    "../cuvl_lab3/**"
+  ],
+  "excludeExternals": false,
+  "excludePrivate": false,
+  "excludeProtected": false
+}

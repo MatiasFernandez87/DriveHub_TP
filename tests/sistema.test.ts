@@ -9,7 +9,6 @@ describe("Tests de la clase SistemaDriveHub", () => {
 
   afterEach(() => {
     sistema["reservas"] = [];
-    sistema["mantenimientos"] = [];
   });
 
   it("Debe ser una instancia de la clase SistemaDriveHub", () => {

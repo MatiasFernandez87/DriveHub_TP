@@ -55,17 +55,9 @@ export default class Reserva {
     return this.temporada;
   }
 
-  public getKmRecorridos(): Map<Date, number>{
-        return this.kmRecorridos;
-    }
-
-  public getFechaInicio(): Date{
-        return this.fechaInicio;
-    }
-
-  public getFechaFin(): Date{
-        return this.fechaFin;
-    }   
+  public getKmRecorridos(): Map<Date, number> {
+    return this.kmRecorridos;
+  }
 
   public registrarUsoVehiculo(kilometros: number, dia: Date): void {
     this.kmRecorridos.set(dia, kilometros);
@@ -86,4 +78,11 @@ export default class Reserva {
     }
   }
 
+  public getFechaInicio(): Date {
+    return this.fechaInicio;
+  }
+
+  public getFechaFin(): Date {
+    return this.fechaFin;
+  }
 }
