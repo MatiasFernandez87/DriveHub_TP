@@ -141,7 +141,54 @@ describe("Tests de la clase SistemaDriveHub", () => {
     expect(resultado).toBe(vehiculoMock);
   })
 
-}); //FIN
+    it("Debe devolver la lista de vehículos mediante getVehiculos()", () => {
+    const vehiculo1 = mockDeep<Vehiculo>();
+    const vehiculo2 = mockDeep<Vehiculo>();
+
+    sistema["vehiculos"] = [vehiculo1, vehiculo2];
+
+    const resultado = sistema.getVehiculos();
+
+    expect(resultado).toHaveLength(2);
+    expect(resultado).toContain(vehiculo1);
+    expect(resultado).toContain(vehiculo2);
+    });
+  
+    it("Debe devolver todas las reservas mediante getReservas()", () => {
+    const reserva1 = mockDeep<Reserva>();
+    const reserva2 = mockDeep<Reserva>();
+
+    sistema["reservas"] = [reserva1, reserva2];
+
+    const resultado = sistema.getReservas();
+
+    expect(resultado).toHaveLength(2);
+    expect(resultado).toContain(reserva1);
+    expect(resultado).toContain(reserva2);
+    });
+  
+  
+  it("Debe devolver el generador de reportes mediante getGeneradorReporte()", () => {
+    const generador = generadorMock
+    sistema.setGeneradorReporte(generador);
+
+    const resultado = sistema.getGeneradorReporte();
+
+    expect(resultado).toBe(generador);
+  });
+
+    it("Debe permitir reemplazar el generador de reportes mediante setGeneradorReporte()", () => {
+    const generador1 = generadorMock;
+    const generador2 = mockDeep<GeneradorDeReporte>();
+
+    sistema.setGeneradorReporte(generador1);
+    expect(sistema.getGeneradorReporte()).toBe(generador1);
+
+    sistema.setGeneradorReporte(generador2);
+    expect(sistema.getGeneradorReporte()).toBe(generador2);
+  });
+
+}); 
 
 
 
