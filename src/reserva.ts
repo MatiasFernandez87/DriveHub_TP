@@ -142,9 +142,14 @@ export default class Reserva {
    * @param dia - Fecha en la que se registraron los kilómetros.
    */
   public registrarUsoVehiculo(kilometros: number, dia: Date): void {
+    if (dia < this.fechaInicio || dia > this.fechaFin) {
+        throw new Error(
+            "No se puede registrar uso fuera de las fechas de la reserva."
+        );
+    }
     this.kmRecorridos.set(dia, kilometros);
     this.vehiculo.actualizarKilometraje(kilometros);
-  }
+}
 
   /**
    * Determina y asigna la temporada correspondiente en función
