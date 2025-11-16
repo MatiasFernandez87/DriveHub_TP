@@ -1,0 +1,9 @@
+@startuml Asignacion Automatica Mantenimiento
+title Diagrama de Secuencia - Asignación Automática de Mantenimiento
+
+SistemaDriveHub -> SistemaDriveHub: Calcula tarifa por finalización de reserva
+SistemaDriveHub -> Vehiculo: Consulta por necesidad de mantenimiento
+Vehiculo -> Vehiculo: Evalúa condiciones de mantenimiento automatico
+Vehiculo -> Vehiculo: Actualiza al estado correspondiente (Mantenimiento/Disponible)
+
+@enduml
