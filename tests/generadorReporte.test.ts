@@ -36,18 +36,16 @@ describe ("Test de la clase generadorReporte", () => {
 
         let porcentajeOcupacion = generadorReporte.vehiculosOcupados(fechaBusqueda, vehiculos, reservas);
 
-        expect(porcentajeOcupacion).toBe(40); // 2 de 5 vehiculos estan ocupados, lo que es el 40%
+        expect(porcentajeOcupacion).toBe(40); 
     });
 
-    // ---------------------------------------------------------
-    // Tests para vehiculoMasAlquilado
-    // ---------------------------------------------------------
+    
 
     it("vehiculoMasAlquilado debe retornar el vehículo más alquilado en el período", () => {
         const fechaInicio = new Date('2024-07-01');
         const fechaFin = new Date('2024-07-31');
 
-        // vehiculo1: 3 reservas dentro del período
+       
         const r1: DeepMockProxy<Reserva> = mockDeep<Reserva>();
         r1.getVehiculo.mockReturnValue(vehiculoMock);
         r1.getFechaInicio.mockReturnValue(new Date('2024-07-05'));
@@ -63,13 +61,13 @@ describe ("Test de la clase generadorReporte", () => {
         r3.getFechaInicio.mockReturnValue(new Date('2024-07-20'));
         r3.getFechaFin.mockReturnValue(new Date('2024-07-22'));
 
-        // vehiculo2: 1 reserva dentro del período
+    
         const r4: DeepMockProxy<Reserva> = mockDeep<Reserva>();
         r4.getVehiculo.mockReturnValue(vehiculoMock2);
         r4.getFechaInicio.mockReturnValue(new Date('2024-07-10'));
         r4.getFechaFin.mockReturnValue(new Date('2024-07-12'));
 
-        // vehiculo3: reserva fuera del período (no debe contarse)
+        
         const r5: DeepMockProxy<Reserva> = mockDeep<Reserva>();
         r5.getVehiculo.mockReturnValue(vehiculoMock3);
         r5.getFechaInicio.mockReturnValue(new Date('2024-06-01'));
@@ -86,7 +84,7 @@ describe ("Test de la clase generadorReporte", () => {
         const fechaInicio = new Date('2024-07-01');
         const fechaFin = new Date('2024-07-31');
 
-        // Reservas fuera del período o directamente sin reservas
+        
         const reservas: Reserva[] = [];
 
         expect(() =>
@@ -94,15 +92,13 @@ describe ("Test de la clase generadorReporte", () => {
         ).toThrow("No hay vehiculos alquilados en el periodo especificado.");
     });
 
-    // ---------------------------------------------------------
-    // Tests para vehiculoMenosAlquilado
-    // ---------------------------------------------------------
+
 
     it("vehiculoMenosAlquilado debe retornar el vehículo menos alquilado en el período", () => {
         const fechaInicio = new Date('2024-07-01');
         const fechaFin = new Date('2024-07-31');
 
-        // vehiculo1: 3 reservas
+       
         const r1: DeepMockProxy<Reserva> = mockDeep<Reserva>();
         r1.getVehiculo.mockReturnValue(vehiculoMock);
         r1.getFechaInicio.mockReturnValue(new Date('2024-07-05'));
@@ -118,13 +114,13 @@ describe ("Test de la clase generadorReporte", () => {
         r3.getFechaInicio.mockReturnValue(new Date('2024-07-20'));
         r3.getFechaFin.mockReturnValue(new Date('2024-07-21'));
 
-        // vehiculo2: 1 reserva (este debería ser el menos alquilado)
+       
         const r4: DeepMockProxy<Reserva> = mockDeep<Reserva>();
         r4.getVehiculo.mockReturnValue(vehiculoMock2);
         r4.getFechaInicio.mockReturnValue(new Date('2024-07-15'));
         r4.getFechaFin.mockReturnValue(new Date('2024-07-16'));
 
-        // vehiculo3: 2 reservas
+
         const r5: DeepMockProxy<Reserva> = mockDeep<Reserva>();
         r5.getVehiculo.mockReturnValue(vehiculoMock3);
         r5.getFechaInicio.mockReturnValue(new Date('2024-07-08'));

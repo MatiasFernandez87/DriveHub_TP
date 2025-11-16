@@ -13,7 +13,7 @@ describe("Estado En_Mantenimiento (con mocks)", () => {
     beforeEach(() => {
         vehiculoMock = mockDeep<Vehiculo>();
 
-        // Cuando cambiarEstado es llamado, getEstado debe actualizarse
+        
         vehiculoMock.cambiarEstado.mockImplementation((nuevoEstado) => {
             vehiculoMock.getEstado.mockReturnValue(nuevoEstado);
         });

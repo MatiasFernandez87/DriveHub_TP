@@ -9,12 +9,12 @@ describe("Estado En_Alquiler - Cobertura completa", () => {
 
     let vehiculoMock: DeepMockProxy<Vehiculo>;
     let estado!: En_Alquiler; 
-    //       🔥 fijate en el "!" → así le decimos a TS que SEGURO se asigna
+    
 
     beforeEach(() => {
         vehiculoMock = mockDeep<Vehiculo>();
 
-        // Simulamos funcionamiento real de cambiarEstado()
+        
         vehiculoMock.cambiarEstado.mockImplementation((nuevoEstado) => {
             vehiculoMock.getEstado.mockReturnValue(nuevoEstado);
         });
