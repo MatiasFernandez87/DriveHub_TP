@@ -1,0 +1,12 @@
+@startuml Crear Reserva
+title Diagrama de Secuencia - Crear Reserva
+
+Cliente -> SistemaDriveHub: Solicita reserva
+SistemaDriveHub -> Vehiculo: Verifica disponibilidad del vehículo
+Vehiculo -> SistemaDriveHub: Confirma disponibilidad
+SistemaDriveHub -> SistemaDriveHub: Genera detalles de la reserva
+SistemaDriveHub -> SistemaDriveHub: Asigna reserva a su coleccion
+SistemaDriveHub -> Vehiculo: Actualiza estado a en_Alquiler
+SistemaDriveHub -> Cliente: Confirma reserva creada
+
+@enduml
