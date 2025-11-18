@@ -5,8 +5,6 @@ import INecesitaMantenimiento from "./necesitaMantenimiento/INecesitaMantenimien
 import KilometrosParaMantenimiento from "./necesitaMantenimiento/kilometrosParaMantenimiento";
 import CantViajes from "./necesitaMantenimiento/cantViajes";
 import UltimoMantenimiento from "./necesitaMantenimiento/ultimoMantenimiento";
-import moment from "moment";
-import EstadosFactory from "../src/estadosVehiculo/estadosFactory"
 
 /**
  * Clase base abstracta para todos los tipos de vehículos del sistema.
@@ -60,6 +58,10 @@ export default abstract class Vehiculo {
     /** Costo fijo por cada mantenimiento realizado. */
     protected costoPorMantenimiento: number;
 
+    /** Historial de mantenimientos de un vehiculo. */
+    protected historialMantenimientos: Map<Date, number> = new Map();
+
+
     /**
      * Crea una instancia base de un vehículo.
      *
@@ -101,9 +103,11 @@ export default abstract class Vehiculo {
     public necesitaMantenimiento(): void {
         for (const r of this.condicionesMantenimiento) {
             if (r.necesitaMantenimiento(this)) {
-                this.enviarAMantenimiento(new Date());
-                this.fechaUltimoMantenimiento = new Date();
+                const fechaMantenimiento = new Date();
+                this.enviarAMantenimiento(fechaMantenimiento);
+                this.fechaUltimoMantenimiento = fechaMantenimiento;
                 this.setCostoTotalMantenimiento(this.costoPorMantenimiento);
+                this.historialMantenimientos.set(fechaMantenimiento, this.costoPorMantenimiento);
                 return;
             }
         }
@@ -184,6 +188,11 @@ export default abstract class Vehiculo {
      */
     public setCostoTotalMantenimiento(costoMantenimiento: number): void {
         this.costoTotalMantenimiento += costoMantenimiento;
+    }
+
+    /** Devuelve el costo por mantenimiento. */
+    public getCostoPorMantenimiento(): number {
+        return this.costoPorMantenimiento;
     }
 
     /** Actualiza la matrícula del vehículo. */

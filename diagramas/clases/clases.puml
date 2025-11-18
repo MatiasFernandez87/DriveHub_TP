@@ -5,11 +5,6 @@
 title Diagrama de Clases - DriveHub
 
 
-enum ESTADO_RESERVA{
-    EN_CURSO,
-    FINALIZADA,
-}
-
 interface ITemporada{
     calculoPorTemporada(sistema: SistemaDriveHub): number; 
 }
@@ -57,6 +52,7 @@ abstract class Vehiculo {
     # condicionesMantenimiento: INecesitaMantenimiento[]
     # costoTotalMantenimiento : number
     # costoPorMantenimiento: number
+    # historialMantenimientos: Map<Date, number>
 
     --setters y getters--
 
@@ -107,7 +103,6 @@ class Reserva {
     - fechaFin: Date
     - kmInicial: number
     - kmRecorridos: number
-    - estadoReserva: EstadoReserva    
     - temporada : ITemporada
 
     ----setters y getters ----

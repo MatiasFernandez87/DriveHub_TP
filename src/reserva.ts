@@ -1,5 +1,4 @@
 import Vehiculo from "./vehiculo";
-import { ESTADO_RESERVA } from "./enums/estado_Reserva"; 
 import Cliente from "./cliente";
 import ITemporada from "./temporadas/Itemporada";
 import moment from "moment";
@@ -40,9 +39,6 @@ export default class Reserva {
    */
   private kmRecorridos: Map<Date, number> = new Map();
 
-  /** Estado actual de la reserva. */
-  private estadoReserva: ESTADO_RESERVA;
-
   /** Temporada correspondiente a la fecha de la reserva. */
   private temporada: ITemporada;
 
@@ -66,7 +62,6 @@ export default class Reserva {
     this.fechaInicio = fechaInicio;
     this.fechaFin = fechaFin;
     this.kmInicial = vehiculo.getKilometraje();
-    this.estadoReserva = ESTADO_RESERVA.EN_CURSO;
     this.temporada = this.setTemporada();
   }
 
@@ -76,14 +71,6 @@ export default class Reserva {
    */
   public getIdReserva(): number {
     return this.idReserva;
-  }
-
-  /**
-   * Obtiene el estado actual de la reserva.
-   * @returns Estado de la reserva (En curso / Finalizada).
-   */
-  public getEstado(): ESTADO_RESERVA {
-    return this.estadoReserva;
   }
 
   /**

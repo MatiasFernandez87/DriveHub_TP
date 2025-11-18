@@ -7,8 +7,6 @@ export { default as Reserva } from "./reserva";
 export { default as Vehiculo } from "./vehiculo";
 export { default as SistemaDriveHub } from "./sistema";
 
-/** Enums */
-export * from "./enums/estado_Reserva";
 
 /** Estados de Vehículo (State Pattern) */
 export { default as EstadoFactory } from "./estadosVehiculo/estadosFactory";

@@ -82,6 +82,7 @@ export default class En_Mantenimiento implements IEstadoVehiculo {
         const hace24hs = moment().subtract(24, "hours");
         
         if (moment(this.vehiculo.getFechaUltimoMantenimiento()).isBefore(hace24hs)) {
+            this.vehiculo.setCostoTotalMantenimiento(this.vehiculo.getCostoPorMantenimiento())
             this.vehiculo.devolver();
             return true;
         }

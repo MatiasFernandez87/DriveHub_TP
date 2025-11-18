@@ -1,5 +1,4 @@
 import Cliente from "../src/cliente";
-import { ESTADO_RESERVA } from "../src/enums/estado_Reserva";
 import Reserva from "../src/reserva";
 import TemporadaAlta from "../src/temporadas/temporada_alta";
 import TemporadaBaja from "../src/temporadas/temporada_baja";
@@ -31,10 +30,6 @@ describe("Test clase Reserva", () => {
 
     it("getIdReserva devuelve un número", () => {
         expect(typeof reserva.getIdReserva()).toBe("number");
-    });
-
-    it("getEstado devuelve el estado EN_CURSO", () => {
-        expect(reserva.getEstado()).toBe(ESTADO_RESERVA.EN_CURSO);
     });
 
     it("getCliente devuelve el cliente asociado", () => {

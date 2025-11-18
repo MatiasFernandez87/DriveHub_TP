@@ -30,6 +30,8 @@ export default class SistemaDriveHub {
    */
   private rentabilidadVehiculos: Map<Vehiculo, number> = new Map();
 
+
+
   /**
    * Crea una nueva reserva si el vehículo está disponible.
    *
@@ -78,10 +80,7 @@ export default class SistemaDriveHub {
    */
   private asignarRentabilidad(vehiculo: Vehiculo, tarifaFinal: number) {
     const rentabilidadActual = this.rentabilidadVehiculos.get(vehiculo) ?? 0;
-    this.rentabilidadVehiculos.set(
-      vehiculo,
-      (rentabilidadActual + tarifaFinal) - vehiculo.getCostoTotalMantenimiento()
-    );
+    this.rentabilidadVehiculos.set(vehiculo, (rentabilidadActual + tarifaFinal) - vehiculo.getCostoTotalMantenimiento());
   }
 
   /**
