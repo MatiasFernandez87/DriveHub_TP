@@ -1,59 +1,53 @@
 import { mockDeep, DeepMockProxy } from "jest-mock-extended";
 import Vehiculo from "../src/vehiculo";
-import En_Alquiler from "../src/estadosVehiculo/en_Alquiler";
+import Necesita_Limpieza from "../src/estadosVehiculo/necesita_Limpieza";
 import Disponible from "../src/estadosVehiculo/disponible";
 import En_Mantenimiento from "../src/estadosVehiculo/en_Mantenimiento";
-import Necesita_Limpieza from "../src/estadosVehiculo/necesita_Limpieza";
 
-describe("Tests del estado En_Alquiler", () => {
+describe("Estado Necesita_Limpieza", () => {
 
-    let vehiculoMock: DeepMockProxy<Vehiculo>;
-    let estado: En_Alquiler;
+  let vehiculoMock: DeepMockProxy<Vehiculo>;
+  let estado: Necesita_Limpieza;
 
-    beforeEach(() => {
-        vehiculoMock = mockDeep<Vehiculo>();
-        estado = new En_Alquiler(vehiculoMock);
-    });
+  beforeEach(() => {
+    vehiculoMock = mockDeep<Vehiculo>();
+    estado = new Necesita_Limpieza(vehiculoMock);
+  });
 
-    
+  test("No está en mantenimiento", () => {
+    expect(estado.estaEnMantenimiento()).toBe(false);
+  });
 
-    it("estaEnMantenimiento() debe devolver false", () => {
-        expect(estado.estaEnMantenimiento()).toBe(false);
-    });
+  test("No puede alquilar", () => {
+    expect(estado.puedeAlquilar()).toBe(false);
+  });
 
-    it("puedeAlquilar() debe devolver false", () => {
-        expect(estado.puedeAlquilar()).toBe(false);
-    });
+  test("Debe lanzar error al intentar asignar alquiler", () => {
+    expect(() => estado.asignarAlquiler()).toThrow(
+      "El vehículo necesita limpieza y no puede ser alquilado."
+    );
+  });
 
-    it("estaAlquilado() debe devolver true", () => {
-        expect(estado.estaAlquilado()).toBe(true);
-    });
+  test("Debe pasar a estado Disponible", () => {
+    estado.asignarDisponible();
 
+    expect(vehiculoMock.cambiarEstado).toHaveBeenCalledWith(
+      expect.any(Disponible)
+    );
+  });
 
-    it("Debe lanzar error al intentar asignarAlquiler() nuevamente", () => {
-        expect(() => estado.asignarAlquiler()).toThrow(
-            "El vehículo ya está en alquiler."
-        );
-    });
+  test("Debe pasar a estado En_Mantenimiento", () => {
+    estado.asignarMantenimiento();
 
-   
+    expect(vehiculoMock.cambiarEstado).toHaveBeenCalledWith(
+      expect.any(En_Mantenimiento)
+    );
+  });
 
-    it("Debe cambiar el estado a Disponible al ejecutar asignarDisponible()", () => {
-        estado.asignarDisponible();
-        expect(vehiculoMock.cambiarEstado).toHaveBeenCalled();
-        expect(vehiculoMock.cambiarEstado.mock.calls[0][0]).toBeInstanceOf(Disponible);
-    });
-
-    it("Debe cambiar el estado a En_Mantenimiento al ejecutar asignarMantenimiento()", () => {
-        estado.asignarMantenimiento();
-        expect(vehiculoMock.cambiarEstado).toHaveBeenCalled();
-        expect(vehiculoMock.cambiarEstado.mock.calls[0][0]).toBeInstanceOf(En_Mantenimiento);
-    });
-
-    it("Debe cambiar el estado a Necesita_Limpieza al ejecutar asignarLimpieza()", () => {
-        estado.asignarLimpieza();
-        expect(vehiculoMock.cambiarEstado).toHaveBeenCalled();
-        expect(vehiculoMock.cambiarEstado.mock.calls[0][0]).toBeInstanceOf(Necesita_Limpieza);
-    });
+  test("Debe lanzar error al intentar volver a Necesita_Limpieza", () => {
+    expect(() => estado.asignarLimpieza()).toThrow(
+      "El vehículo ya está en estado de 'Necesita Limpieza'."
+    );
+  });
 
 });

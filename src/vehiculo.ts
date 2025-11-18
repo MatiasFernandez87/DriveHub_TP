@@ -6,6 +6,7 @@ import KilometrosParaMantenimiento from "./necesitaMantenimiento/kilometrosParaM
 import CantViajes from "./necesitaMantenimiento/cantViajes";
 import UltimoMantenimiento from "./necesitaMantenimiento/ultimoMantenimiento";
 import moment from "moment";
+import EstadosFactory from "../src/estadosVehiculo/estadosFactory"
 
 /**
  * Clase base abstracta para todos los tipos de vehículos del sistema.
@@ -236,7 +237,7 @@ export default abstract class Vehiculo {
      */
     public alquilar(): void {
         this.estadoVehiculo.asignarAlquiler();
-        this.cantidadViajes++;
+        this.cantidadViajes++; 
     }
 
     /**

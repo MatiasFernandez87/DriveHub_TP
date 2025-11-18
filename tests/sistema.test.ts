@@ -5,7 +5,6 @@ import Reserva from "../src/reserva";
 import { DeepMockProxy, mockDeep } from "jest-mock-extended";
 import IEstadoVehiculo from "../src/estadosVehiculo/IEstadoVehiculo";
 import GeneradorDeReporte from "../src/reportes/generadorReporte";
-import TemporadaAlta from "../src/temporadas/temporada_alta";
 
 describe("Tests de la clase SistemaDriveHub", () => {
   let sistema: SistemaDriveHub;
