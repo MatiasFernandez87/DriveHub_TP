@@ -1,9 +1,6 @@
 import { mockDeep, DeepMockProxy } from "jest-mock-extended";
 import Vehiculo from "../src/vehiculo";
 import En_Mantenimiento from "../src/estadosVehiculo/en_Mantenimiento";
-import Disponible from "../src/estadosVehiculo/disponible";
-import En_Alquiler from "../src/estadosVehiculo/en_Alquiler";
-import Necesita_Limpieza from "../src/estadosVehiculo/necesita_Limpieza";
 
 describe("Estado En_Mantenimiento (con mocks)", () => {
 
