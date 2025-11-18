@@ -140,6 +140,13 @@ class SistemaDriveHub {
 
 }
 
+class EstadosFactory {
+    + static crearEstadoDisponible(vehiculo: Vehiculo) : Disponible
+    + static crearEstadoEnAlquiler(vehiculo: Vehiculo) : en_Alquiler
+    + static crearEstadoEnMantenimiento(vehiculo: Vehiculo) : en_Mantenimiento
+    + static crearEstadoNecesitaLimpieza(vehiculo: Vehiculo) : necesita_Limpieza
+}
+
 'notas
 ' note left of SistemaDriveHub::crearReserva
 '     Este metodo deberia chequear que el vehiculo este disponible antes de crear la reserva.
