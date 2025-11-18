@@ -144,14 +144,6 @@ export default abstract class Vehiculo {
      * @returns {IEstadoVehiculo} Estado actual del vehículo.
      */
     public getEstado(): IEstadoVehiculo {
-
-        if (this.estadoVehiculo.estaEnMantenimiento()) {
-            const hace24hs = moment().subtract(24, "hours");
-
-            if (moment(this.fechaUltimoMantenimiento).isBefore(hace24hs)) {
-                this.devolver();
-            }
-        }
         return this.estadoVehiculo;
     }
 

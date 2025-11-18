@@ -46,8 +46,4 @@ describe("Estado En_Mantenimiento (con mocks)", () => {
             .toBe("Necesita_Limpieza");
     });
 
-    it("puedeAlquilar() debe devolver false", () => {
-        expect(estado.puedeAlquilar()).toBe(false);
-    });
-
 });

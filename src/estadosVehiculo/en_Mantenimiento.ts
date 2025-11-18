@@ -4,6 +4,8 @@ import Disponible from "./disponible";
 import En_Alquiler from "./en_Alquiler";
 import Necesita_Limpieza from "./necesita_Limpieza";
 import EstadoFactory from "./estadosFactory";
+import moment from "moment";
+
 
 /**
  * Estado concreto del Patrón State que representa que el vehículo
@@ -77,6 +79,12 @@ export default class En_Mantenimiento implements IEstadoVehiculo {
      * @returns {boolean} Siempre `false` mientras esté en mantenimiento.
      */
     puedeAlquilar(): boolean {
-        return false;
-    }
+        const hace24hs = moment().subtract(24, "hours");
+        
+        if (moment(this.vehiculo.getFechaUltimoMantenimiento()).isBefore(hace24hs)) {
+            this.vehiculo.devolver();
+            return true;
+        }
+         return false;
+        }       
 }
