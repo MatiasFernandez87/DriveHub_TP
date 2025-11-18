@@ -1,151 +1,159 @@
-import { mockDeep, DeepMockProxy } from 'jest-mock-extended';
-import GeneradorDeReporte from '../src/reportes/generadorReporte';
-import Vehiculo from '../src/vehiculo';
-import Reserva from '../src/reserva';
+import { mockDeep, DeepMockProxy } from "jest-mock-extended";
+import GeneradorDeReporte from "../src/reportes/generadorReporte";
+import Vehiculo from "../src/vehiculo";
+import Reserva from "../src/reserva";
 
-describe ("Test de la clase generadorReporte", () => {
+describe("Tests de la clase GeneradorDeReporte", () => {
 
-    let generadorReporte = new GeneradorDeReporte();
-    let vehiculoMock: DeepMockProxy<Vehiculo> = mockDeep<Vehiculo>();
-    let vehiculoMock2: DeepMockProxy<Vehiculo> = mockDeep<Vehiculo>();
-    let vehiculoMock3: DeepMockProxy<Vehiculo> = mockDeep<Vehiculo>();
-    let vehiculoMock4: DeepMockProxy<Vehiculo> = mockDeep<Vehiculo>();
-    let vehiculoMock5: DeepMockProxy<Vehiculo> = mockDeep<Vehiculo>();
+    let generadorReporte: GeneradorDeReporte;
 
-    it("Debe ser una instancia de la clase GeneradorDeReporte", () => {
-        expect(generadorReporte).toBeInstanceOf(GeneradorDeReporte);
+    // Vehículos mockeados
+    let v1: DeepMockProxy<Vehiculo>;
+    let v2: DeepMockProxy<Vehiculo>;
+    let v3: DeepMockProxy<Vehiculo>;
+    let v4: DeepMockProxy<Vehiculo>;
+    let v5: DeepMockProxy<Vehiculo>;
+
+    beforeEach(() => {
+        generadorReporte = new GeneradorDeReporte();
+
+        v1 = mockDeep<Vehiculo>();
+        v2 = mockDeep<Vehiculo>();
+        v3 = mockDeep<Vehiculo>();
+        v4 = mockDeep<Vehiculo>();
+        v5 = mockDeep<Vehiculo>();
+
+  
+        v1.getMatricula.mockReturnValue("AAA111");
+        v2.getMatricula.mockReturnValue("BBB222");
+        v3.getMatricula.mockReturnValue("CCC333");
+        v4.getMatricula.mockReturnValue("DDD444");
+        v5.getMatricula.mockReturnValue("EEE555");
     });
 
-    it("vehiculosOcupados debe retornar el porcentaje correcto de vehiculos ocupados", () => {
-        let fechaBusqueda = new Date('2024-07-15');
-        let vehiculos = [vehiculoMock, vehiculoMock2, vehiculoMock3, vehiculoMock4, vehiculoMock5];
 
-        let reserva1: DeepMockProxy<Reserva> = mockDeep<Reserva>();
-        reserva1.getFechaInicio.mockReturnValue(new Date('2024-07-10'));
-        reserva1.getFechaFin.mockReturnValue(new Date('2024-07-20'));
+    it("vehiculosOcupados debe retornar el porcentaje correcto", () => {
+        const fechaBusqueda = new Date("2024-07-15");
+        const vehiculos = [v1, v2, v3, v4, v5];
 
-        let reserva2: DeepMockProxy<Reserva> = mockDeep<Reserva>();
-        reserva2.getFechaInicio.mockReturnValue(new Date('2024-06-01'));
-        reserva2.getFechaFin.mockReturnValue(new Date('2024-06-10'));
+        const r1 = mockDeep<Reserva>();
+        r1.getFechaInicio.mockReturnValue(new Date("2024-07-10"));
+        r1.getFechaFin.mockReturnValue(new Date("2024-07-20"));
 
-        let reserva3: DeepMockProxy<Reserva> = mockDeep<Reserva>();
-        reserva3.getFechaInicio.mockReturnValue(new Date('2024-07-14'));
-        reserva3.getFechaFin.mockReturnValue(new Date('2024-07-16'));
+        const r2 = mockDeep<Reserva>();
+        r2.getFechaInicio.mockReturnValue(new Date("2024-06-01"));
+        r2.getFechaFin.mockReturnValue(new Date("2024-06-10"));
 
-        let reservas = [reserva1, reserva2, reserva3];
+        const r3 = mockDeep<Reserva>();
+        r3.getFechaInicio.mockReturnValue(new Date("2024-07-14"));
+        r3.getFechaFin.mockReturnValue(new Date("2024-07-16"));
 
-        let porcentajeOcupacion = generadorReporte.vehiculosOcupados(fechaBusqueda, vehiculos, reservas);
+        const reservas = [r1, r2, r3];
 
-        expect(porcentajeOcupacion).toBe(40); 
+        const porcentaje = generadorReporte.vehiculosOcupados(
+            fechaBusqueda,
+            vehiculos,
+            reservas
+        );
+
+        expect(porcentaje).toBe(40); 
     });
 
-    
+    it("vehiculoMasAlquilado debe retornar el vehículo más alquilado", () => {
+        const fi = new Date("2024-07-01");
+        const ff = new Date("2024-07-31");
 
-    it("vehiculoMasAlquilado debe retornar el vehículo más alquilado en el período", () => {
-        const fechaInicio = new Date('2024-07-01');
-        const fechaFin = new Date('2024-07-31');
+        const r1 = mockDeep<Reserva>();
+        r1.getVehiculo.mockReturnValue(v1);
+        r1.getFechaInicio.mockReturnValue(new Date("2024-07-03"));
+        r1.getFechaFin.mockReturnValue(new Date("2024-07-05"));
 
-       
-        const r1: DeepMockProxy<Reserva> = mockDeep<Reserva>();
-        r1.getVehiculo.mockReturnValue(vehiculoMock);
-        r1.getFechaInicio.mockReturnValue(new Date('2024-07-05'));
-        r1.getFechaFin.mockReturnValue(new Date('2024-07-10'));
+        const r2 = mockDeep<Reserva>();
+        r2.getVehiculo.mockReturnValue(v1);
+        r2.getFechaInicio.mockReturnValue(new Date("2024-07-10"));
+        r2.getFechaFin.mockReturnValue(new Date("2024-07-12"));
 
-        const r2: DeepMockProxy<Reserva> = mockDeep<Reserva>();
-        r2.getVehiculo.mockReturnValue(vehiculoMock);
-        r2.getFechaInicio.mockReturnValue(new Date('2024-07-15'));
-        r2.getFechaFin.mockReturnValue(new Date('2024-07-18'));
+        const r3 = mockDeep<Reserva>();
+        r3.getVehiculo.mockReturnValue(v1);
+        r3.getFechaInicio.mockReturnValue(new Date("2024-07-20"));
+        r3.getFechaFin.mockReturnValue(new Date("2024-07-25"));
 
-        const r3: DeepMockProxy<Reserva> = mockDeep<Reserva>();
-        r3.getVehiculo.mockReturnValue(vehiculoMock);
-        r3.getFechaInicio.mockReturnValue(new Date('2024-07-20'));
-        r3.getFechaFin.mockReturnValue(new Date('2024-07-22'));
+        const r4 = mockDeep<Reserva>();
+        r4.getVehiculo.mockReturnValue(v2);
+        r4.getFechaInicio.mockReturnValue(new Date("2024-07-08"));
+        r4.getFechaFin.mockReturnValue(new Date("2024-07-09"));
 
-    
-        const r4: DeepMockProxy<Reserva> = mockDeep<Reserva>();
-        r4.getVehiculo.mockReturnValue(vehiculoMock2);
-        r4.getFechaInicio.mockReturnValue(new Date('2024-07-10'));
-        r4.getFechaFin.mockReturnValue(new Date('2024-07-12'));
+        const reservas = [r1, r2, r3, r4];
 
-        
-        const r5: DeepMockProxy<Reserva> = mockDeep<Reserva>();
-        r5.getVehiculo.mockReturnValue(vehiculoMock3);
-        r5.getFechaInicio.mockReturnValue(new Date('2024-06-01'));
-        r5.getFechaFin.mockReturnValue(new Date('2024-06-10'));
-
-        const reservas: Reserva[] = [r1, r2, r3, r4, r5];
-
-        const resultado = generadorReporte.vehiculoMasAlquilado(fechaInicio, fechaFin, reservas);
-
-        expect(resultado).toBe(vehiculoMock);
+        const resultado = generadorReporte.vehiculoMasAlquilado(fi, ff, reservas);
+        expect(resultado).toBe(v1);
     });
 
-    it("vehiculoMasAlquilado debe lanzar error si no hay vehículos alquilados en el período", () => {
-        const fechaInicio = new Date('2024-07-01');
-        const fechaFin = new Date('2024-07-31');
-
-        
+    it("vehiculoMasAlquilado debe lanzar error si no hay reservas activas", () => {
+        const fi = new Date("2024-07-01");
+        const ff = new Date("2024-07-31");
         const reservas: Reserva[] = [];
 
         expect(() =>
-            generadorReporte.vehiculoMasAlquilado(fechaInicio, fechaFin, reservas)
+            generadorReporte.vehiculoMasAlquilado(fi, ff, reservas)
         ).toThrow("No hay vehiculos alquilados en el periodo especificado.");
     });
 
 
+    it("vehiculoMenosAlquilado debe retornar el vehículo menos alquilado", () => {
+        const fi = new Date("2024-07-01");
+        const ff = new Date("2024-07-31");
 
-    it("vehiculoMenosAlquilado debe retornar el vehículo menos alquilado en el período", () => {
-        const fechaInicio = new Date('2024-07-01');
-        const fechaFin = new Date('2024-07-31');
+        const r1 = mockDeep<Reserva>();
+        r1.getVehiculo.mockReturnValue(v1);
+        r1.getFechaInicio.mockReturnValue(new Date("2024-07-05"));
+        r1.getFechaFin.mockReturnValue(new Date("2024-07-07"));
 
-       
-        const r1: DeepMockProxy<Reserva> = mockDeep<Reserva>();
-        r1.getVehiculo.mockReturnValue(vehiculoMock);
-        r1.getFechaInicio.mockReturnValue(new Date('2024-07-05'));
-        r1.getFechaFin.mockReturnValue(new Date('2024-07-07'));
+        const r2 = mockDeep<Reserva>();
+        r2.getVehiculo.mockReturnValue(v1);
+        r2.getFechaInicio.mockReturnValue(new Date("2024-07-10"));
+        r2.getFechaFin.mockReturnValue(new Date("2024-07-12"));
 
-        const r2: DeepMockProxy<Reserva> = mockDeep<Reserva>();
-        r2.getVehiculo.mockReturnValue(vehiculoMock);
-        r2.getFechaInicio.mockReturnValue(new Date('2024-07-10'));
-        r2.getFechaFin.mockReturnValue(new Date('2024-07-12'));
+        const r3 = mockDeep<Reserva>();
+        r3.getVehiculo.mockReturnValue(v2);
+        r3.getFechaInicio.mockReturnValue(new Date("2024-07-15"));
+        r3.getFechaFin.mockReturnValue(new Date("2024-07-16"));
 
-        const r3: DeepMockProxy<Reserva> = mockDeep<Reserva>();
-        r3.getVehiculo.mockReturnValue(vehiculoMock);
-        r3.getFechaInicio.mockReturnValue(new Date('2024-07-20'));
-        r3.getFechaFin.mockReturnValue(new Date('2024-07-21'));
+        const reservas = [r1, r2, r3];
 
-       
-        const r4: DeepMockProxy<Reserva> = mockDeep<Reserva>();
-        r4.getVehiculo.mockReturnValue(vehiculoMock2);
-        r4.getFechaInicio.mockReturnValue(new Date('2024-07-15'));
-        r4.getFechaFin.mockReturnValue(new Date('2024-07-16'));
-
-
-        const r5: DeepMockProxy<Reserva> = mockDeep<Reserva>();
-        r5.getVehiculo.mockReturnValue(vehiculoMock3);
-        r5.getFechaInicio.mockReturnValue(new Date('2024-07-08'));
-        r5.getFechaFin.mockReturnValue(new Date('2024-07-09'));
-
-        const r6: DeepMockProxy<Reserva> = mockDeep<Reserva>();
-        r6.getVehiculo.mockReturnValue(vehiculoMock3);
-        r6.getFechaInicio.mockReturnValue(new Date('2024-07-18'));
-        r6.getFechaFin.mockReturnValue(new Date('2024-07-19'));
-
-        const reservas: Reserva[] = [r1, r2, r3, r4, r5, r6];
-
-        const resultado = generadorReporte.vehiculoMenosAlquilado(fechaInicio, fechaFin, reservas);
-
-        expect(resultado).toBe(vehiculoMock2);
+        const resultado = generadorReporte.vehiculoMenosAlquilado(fi, ff, reservas);
+        expect(resultado).toBe(v2);
     });
 
-    it("vehiculoMenosAlquilado debe lanzar error si no hay vehículos alquilados en el período", () => {
-        const fechaInicio = new Date('2024-07-01');
-        const fechaFin = new Date('2024-07-31');
-
+    it("vehiculoMenosAlquilado debe lanzar error si no hay reservas activas", () => {
+        const fi = new Date("2024-07-01");
+        const ff = new Date("2024-07-31");
         const reservas: Reserva[] = [];
 
         expect(() =>
-            generadorReporte.vehiculoMenosAlquilado(fechaInicio, fechaFin, reservas)
+            generadorReporte.vehiculoMenosAlquilado(fi, ff, reservas)
         ).toThrow("No hay vehiculos alquilados en el periodo especificado.");
     });
+
+    
+    it("vehiculoMasRentable debe retornar el vehículo más rentable", () => {
+        const mapa = new Map<Vehiculo, number>();
+        mapa.set(v1, 200);
+        mapa.set(v2, 500);
+        mapa.set(v3, 100);
+
+        const resultado = generadorReporte.vehiculoMasRentable(mapa);
+        expect(resultado).toBe(v2);
+    });
+
+   
+
+    it("vehiculoMenosRentable debe retornar undefined si el mapa está vacío", () => {
+        const mapa = new Map<Vehiculo, number>();
+
+        const resultado = generadorReporte.vehiculoMenosRentable(mapa);
+
+        expect(resultado).toBeUndefined();
+    });
+
 });

@@ -119,7 +119,7 @@ export default class GeneradorDeReporte implements IGeneradorReporte {
    */
   public vehiculoMasRentable(vehiculos: Map<Vehiculo, number>): Vehiculo {
     let masRentable: Vehiculo = undefined as unknown as Vehiculo;
-    let max = 0;
+    let max = -Infinity;
 
     vehiculos.forEach((rentabilidad, v) => {
       if (rentabilidad > max) {
@@ -141,7 +141,7 @@ export default class GeneradorDeReporte implements IGeneradorReporte {
    */
   public vehiculoMenosRentable(vehiculos: Map<Vehiculo, number>): Vehiculo {
     let menosRentable: Vehiculo = undefined as unknown as Vehiculo;
-    let min = Infinity;
+    let min = -Infinity;
 
     vehiculos.forEach((rentabilidad, v) => {
       if (rentabilidad < min) {

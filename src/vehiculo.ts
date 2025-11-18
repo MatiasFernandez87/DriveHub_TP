@@ -6,6 +6,7 @@ import KilometrosParaMantenimiento from "./necesitaMantenimiento/kilometrosParaM
 import CantViajes from "./necesitaMantenimiento/cantViajes";
 import UltimoMantenimiento from "./necesitaMantenimiento/ultimoMantenimiento";
 import moment from "moment";
+import EstadosFactory from "../src/estadosVehiculo/estadosFactory"
 
 /**
  * Clase base abstracta para todos los tipos de vehículos del sistema.
@@ -235,15 +236,15 @@ export default abstract class Vehiculo {
      * Incrementa la cantidad de viajes realizados.
      */
     public alquilar(): void {
-        this.estadoVehiculo.asignarAlquiler();
-        this.cantidadViajes++;
+        this.cambiarEstado(EstadosFactory.crearEnAlquiler(this))
+        this.cantidadViajes++; 
     }
 
     /**
      * Devuelve el vehículo a estado Disponible.
      */
     public devolver(): void {
-        this.estadoVehiculo.asignarDisponible();
+        this.cambiarEstado(EstadosFactory.crearDisponible(this));
     }
 
     /**
@@ -253,14 +254,14 @@ export default abstract class Vehiculo {
      */
     public enviarAMantenimiento(ingreso: Date): void {
         this.fechaUltimoMantenimiento = ingreso;
-        this.estadoVehiculo.asignarMantenimiento();
+        this.cambiarEstado(EstadosFactory.crearENMantenimiento(this));
     }
 
     /**
      * Envía el vehículo al estado "Necesita Limpieza".
      */
     public limpiar(): void {
-        this.estadoVehiculo.asignarLimpieza();
+        this.cambiarEstado(EstadosFactory.crearNecesitaLimpieza(this));
     }
 
     /**
