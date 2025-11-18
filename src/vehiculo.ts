@@ -236,7 +236,7 @@ export default abstract class Vehiculo {
      * Incrementa la cantidad de viajes realizados.
      */
     public alquilar(): void {
-        this.cambiarEstado(EstadosFactory.crearEnAlquiler(this))
+        this.estadoVehiculo.asignarAlquiler();
         this.cantidadViajes++; 
     }
 
@@ -244,7 +244,7 @@ export default abstract class Vehiculo {
      * Devuelve el vehículo a estado Disponible.
      */
     public devolver(): void {
-        this.cambiarEstado(EstadosFactory.crearDisponible(this));
+        this.estadoVehiculo.asignarDisponible();
     }
 
     /**
@@ -254,14 +254,14 @@ export default abstract class Vehiculo {
      */
     public enviarAMantenimiento(ingreso: Date): void {
         this.fechaUltimoMantenimiento = ingreso;
-        this.cambiarEstado(EstadosFactory.crearENMantenimiento(this));
+        this.estadoVehiculo.asignarMantenimiento();
     }
 
     /**
      * Envía el vehículo al estado "Necesita Limpieza".
      */
     public limpiar(): void {
-        this.cambiarEstado(EstadosFactory.crearNecesitaLimpieza(this));
+        this.estadoVehiculo.asignarLimpieza();
     }
 
     /**

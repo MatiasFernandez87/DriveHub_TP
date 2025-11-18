@@ -3,6 +3,7 @@ import Vehiculo from "../vehiculo";
 import Disponible from "./disponible";
 import En_Mantenimiento from "./en_Mantenimiento";
 import Necesita_Limpieza from "./necesita_Limpieza";
+import EstadoFactory from "./estadosFactory";
 
 /**
  * Estado concreto del Patrón State que representa que el vehículo
@@ -47,7 +48,7 @@ export default class En_Alquiler implements IEstadoVehiculo {
      * y el vehículo puede volver a ser utilizado.
      */
     asignarDisponible(): void {
-        this.vehiculo.cambiarEstado(new Disponible(this.vehiculo));
+        this.vehiculo.cambiarEstado(EstadoFactory.crearDisponible(this.vehiculo));
     }
 
     /**
@@ -57,7 +58,7 @@ export default class En_Alquiler implements IEstadoVehiculo {
      * inmediatamente después o durante el alquiler.
      */
     asignarMantenimiento(): void {
-        this.vehiculo.cambiarEstado(new En_Mantenimiento(this.vehiculo));
+        this.vehiculo.cambiarEstado(EstadoFactory.crearENMantenimiento(this.vehiculo));
     }
 
     /**
@@ -66,7 +67,7 @@ export default class En_Alquiler implements IEstadoVehiculo {
      * Normalmente se aplica cuando el cliente devuelve el vehículo.
      */
     asignarLimpieza(): void {
-        this.vehiculo.cambiarEstado(new Necesita_Limpieza(this.vehiculo));
+        this.vehiculo.cambiarEstado(EstadoFactory.crearNecesitaLimpieza(this.vehiculo));
     }
 
     /**
