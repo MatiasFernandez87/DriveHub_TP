@@ -31,6 +31,16 @@ interface IEstadoVehiculo {
     + estaEnMantenimiento() : boolean 
 }
 
+interface IGeneradorDeReporte {
+    + vehiculoMasAlquilado(fechaInicio: Date, fechaFin: Date, reserva: Reserva[]): Vehiculo
+    + vehiculoMenosAlquilado(fechaInicio: Date, fechaFin: Date, reserva: Reserva[]): Vehiculo
+    + vehiculoMasRentable(vehiculos: Map<Vehiculo, number>): Vehiculo
+    + vehiculoMenosRentable(vehiculos: Map<Vehiculo, number>): Vehiculo
+    + vehiculosOcupados(fechaBusqueda: Date, vehiculos: Vehiculos[], reservas: Reserva[]): number
+}
+
+class GeneradorReporte implements IGeneradorDeReporte{}
+
 class Disponible implements IEstadoVehiculo
 class En_Alquiler implements IEstadoVehiculo{
     + estaAlquilado : boolean
@@ -90,7 +100,7 @@ class Cliente {
     ----setters y getters ----
 
     + solicitarReserva(vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date): void
-    + manejar(kilometros: number): void
+    + manejar(kilometros: number, dia: Date): void
     
 }
 
@@ -118,14 +128,14 @@ class SistemaDriveHub {
     - clientes: Cliente[]
     - reservas: Reserva[]
     - mantenimiento: Mantenimiento[] 
-    - generadorReporte : GeneradorDeReporte
-    - rentabilidadVehiculos : MAP()   
+    - generadorReporte : IGeneradorDeReporte
+    - rentabilidadVehiculos : Map<Vehiculo, number>   
     
     ---setters y getters-----
 
     + crearReserva(cliente: Cliente, vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date)   
     + calcularTarifaFinal(reserva : Reserva) : number
-    - asignarRentabilidad (vehiculo: Vehiculo, tarifaFinal: number)
+    + asignarRentabilidad (vehiculo: Vehiculo, tarifaFinal: number)
     + reporteVehiculosOcupados(fechaBusqueda : Date) : number)
     + reporteVehiculoMasAlquilado(fechaInicio: Date, fechaFin: Date): Vehiculo
     + reporteVehiculoMenosAlquilado(fechaInicio: Date, fechaFin: Date): Vehiculo
@@ -155,7 +165,6 @@ class EstadosFactory {
 SistemaDriveHub *-- Vehiculo
 SistemaDriveHub *-- Cliente
 SistemaDriveHub *-- Reserva
-Reserva *-- ESTADO_RESERVA
 Vehiculo *-- IEstadoVehiculo
 Vehiculo *-- INecesitaMantenimiento
 Reserva *-- ITemporada

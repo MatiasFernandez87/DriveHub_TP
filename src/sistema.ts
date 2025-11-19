@@ -22,7 +22,7 @@ export default class SistemaDriveHub {
   private reservas: Reserva[] = [];
 
   /** Generador de reportes utilizado por el sistema. */
-  private generadorReporte: GeneradorDeReporte = new GeneradorDeReporte();
+  private generadorReporte: IGeneradorReporte = new GeneradorDeReporte();
 
   /**
    * Mapa de rentabilidad acumulada por vehículo.

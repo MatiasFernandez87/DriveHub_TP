@@ -25,17 +25,12 @@ export default class GeneradorDeReporte implements IGeneradorReporte {
    * @returns El vehículo con mayor cantidad de alquileres en el período.
    * @throws Si no hay vehículos alquilados en el período especificado.
    */
-  public vehiculoMasAlquilado(
-    fechaInicio: Date,
-    fechaFin: Date,
-    reservas: Reserva[]
-  ): Vehiculo {
+  public vehiculoMasAlquilado(fechaInicio: Date, fechaFin: Date, reservas: Reserva[]): Vehiculo {
     const vehiculosAlquilados = new Map<Vehiculo, number>();
     let masAlquilado: Vehiculo = undefined as unknown as Vehiculo;
     let max = 0;
 
-    const reservasActivas = reservas.filter(
-      (r) =>
+    const reservasActivas = reservas.filter((r) =>
         moment(fechaInicio).isBefore(r.getFechaFin()) &&
         moment(fechaFin).isAfter(r.getFechaInicio())
     );
@@ -72,17 +67,12 @@ export default class GeneradorDeReporte implements IGeneradorReporte {
    * @returns El vehículo con menor cantidad de alquileres en el período.
    * @throws Si no hay vehículos alquilados en el período especificado.
    */
-  public vehiculoMenosAlquilado(
-    fechaInicio: Date,
-    fechaFin: Date,
-    reservas: Reserva[]
-  ): Vehiculo {
+  public vehiculoMenosAlquilado(fechaInicio: Date, fechaFin: Date, reservas: Reserva[]): Vehiculo {
     const vehiculosAlquilados = new Map<Vehiculo, number>();
     let min = Infinity;
     let menosAlquilado: Vehiculo = undefined as unknown as Vehiculo;
 
-    const reservasActivas = reservas.filter(
-      (r) =>
+    const reservasActivas = reservas.filter((r) =>
         moment(fechaInicio).isBefore(r.getFechaFin()) &&
         moment(fechaFin).isAfter(r.getFechaInicio())
     );
