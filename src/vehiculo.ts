@@ -1,10 +1,7 @@
 import IEstadoVehiculo from "./estadosVehiculo/IEstadoVehiculo";
 import Reserva from "./reserva";
 import Disponible from "./estadosVehiculo/disponible";
-import INecesitaMantenimiento from "./necesitaMantenimiento/INecesitaMantenimiento";
-import KilometrosParaMantenimiento from "./necesitaMantenimiento/kilometrosParaMantenimiento";
-import CantViajes from "./necesitaMantenimiento/cantViajes";
-import UltimoMantenimiento from "./necesitaMantenimiento/ultimoMantenimiento";
+
 
 /**
  * Clase base abstracta para todos los tipos de vehículos del sistema.
@@ -45,13 +42,7 @@ export default abstract class Vehiculo {
     /** Fecha del último mantenimiento realizado. */
     protected fechaUltimoMantenimiento: Date = undefined as unknown as Date;
 
-    /** Conjunto de reglas (Strategy) para decidir mantenimiento. */
-    protected condicionesMantenimiento: INecesitaMantenimiento[] = [
-        new KilometrosParaMantenimiento(),
-        new CantViajes(),
-        new UltimoMantenimiento()
-    ];
-
+  
     /** Monto acumulado de gastos de mantenimiento del vehículo. */
     protected costoTotalMantenimiento: number;
 
@@ -100,19 +91,7 @@ export default abstract class Vehiculo {
      * Si ninguna regla aplica:
      * - el vehículo se devuelve normalmente (pasa a `Disponible`)
      */
-    public necesitaMantenimiento(): void {
-        for (const r of this.condicionesMantenimiento) {
-            if (r.necesitaMantenimiento(this)) {
-                const fechaMantenimiento = new Date();
-                this.enviarAMantenimiento(fechaMantenimiento);
-                this.fechaUltimoMantenimiento = fechaMantenimiento;
-                this.setCostoTotalMantenimiento(this.costoPorMantenimiento);
-                this.historialMantenimientos.set(fechaMantenimiento, this.costoPorMantenimiento);
-                return;
-            }
-        }
-        this.devolver();
-    }
+
 
     /** @returns Costo total acumulado en mantenimientos */
     public getCostoTotalMantenimiento(): number {
@@ -139,6 +118,10 @@ export default abstract class Vehiculo {
         return this.cargoExtra;
     }
 
+    public getHistorialMantenimiento(): Map<Date, number>{
+        return this.historialMantenimientos
+    }
+
     /**
      * Devuelve el estado actual del vehículo.
      *
@@ -159,6 +142,10 @@ export default abstract class Vehiculo {
     /** Establece la cantidad de viajes realizados. */
     public setCantidadViajes(cant: number): void {
         this.cantidadViajes = cant;
+    }
+
+    public setHistorialMantenimiento(fecha: Date, costoMantenimiento: number){
+        this.historialMantenimientos.set(fecha,costoMantenimiento);
     }
 
     /** Establece la fecha del último mantenimiento. */
@@ -236,7 +223,7 @@ export default abstract class Vehiculo {
      * Envía el vehículo al estado "En Alquiler".
      * Incrementa la cantidad de viajes realizados.
      */
-    public alquilar(): void {
+    public asignarAlquiler(): void {
         this.estadoVehiculo.asignarAlquiler();
         this.cantidadViajes++; 
     }
@@ -244,7 +231,7 @@ export default abstract class Vehiculo {
     /**
      * Devuelve el vehículo a estado Disponible.
      */
-    public devolver(): void {
+    public asignarDisponible(): void {
         this.estadoVehiculo.asignarDisponible();
     }
 
@@ -253,15 +240,18 @@ export default abstract class Vehiculo {
      * 
      * @param {Date} ingreso - Fecha de ingreso al mantenimiento.
      */
-    public enviarAMantenimiento(ingreso: Date): void {
-        this.fechaUltimoMantenimiento = ingreso;
+
+
+
+    public asignarMantenimiento(): void {
         this.estadoVehiculo.asignarMantenimiento();
     }
+    
 
     /**
      * Envía el vehículo al estado "Necesita Limpieza".
      */
-    public limpiar(): void {
+    public asignarLimpieza(): void {
         this.estadoVehiculo.asignarLimpieza();
     }
 
@@ -273,4 +263,11 @@ export default abstract class Vehiculo {
      * @returns {number} Tarifa calculada.
      */
     public abstract calcularTarifa(reserva: Reserva): number;
+
+    public actualizarInfoMantenimiento(): void{
+        const fechaMantenimiento = new Date();
+        this.setFechaUltimoMantenimiento(fechaMantenimiento)
+        this.setCostoTotalMantenimiento(this.getCostoPorMantenimiento());
+        this.setHistorialMantenimiento(fechaMantenimiento, this.getCostoPorMantenimiento());
+    }
 }

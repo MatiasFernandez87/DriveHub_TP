@@ -55,4 +55,9 @@ export default interface IEstadoVehiculo {
     * @returns {boolean} `true` si el estado representa "En Mantenimiento".
      */
     estaEnMantenimiento(): boolean;
+
+
+
+    
+    evaluarMantenimiento(): void;
 }

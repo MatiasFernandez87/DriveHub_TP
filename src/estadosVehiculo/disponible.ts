@@ -3,7 +3,7 @@ import Vehiculo from "../vehiculo";
 import En_Alquiler from "./en_Alquiler";
 import En_Mantenimiento from "./en_Mantenimiento";
 import Necesita_Limpieza from "./necesita_Limpieza";
-import EstadoFactory from "./estadosFactory";
+
 
 /**
  * Estado concreto del Patrón State que representa que el vehículo
@@ -17,12 +17,17 @@ import EstadoFactory from "./estadosFactory";
  */
 export default class Disponible implements IEstadoVehiculo {
 
+
+    
+   
     /**
      * Crea una instancia del estado "Disponible" para el vehículo dado.
      *
      * @param {Vehiculo} vehiculo - Vehículo cuyo estado se administra.
      */
     constructor(private vehiculo: Vehiculo) {}
+
+
 
     /**
      * Indica si el vehículo se encuentra en mantenimiento.
@@ -39,7 +44,7 @@ export default class Disponible implements IEstadoVehiculo {
      * Se ejecuta cuando un cliente alquila el vehículo.
      */
     asignarAlquiler(): void {
-        this.vehiculo.cambiarEstado(EstadoFactory.crearEnAlquiler(this.vehiculo));
+        this.vehiculo.cambiarEstado(new En_Alquiler(this.vehiculo));
     }
 
     /**
@@ -57,7 +62,7 @@ export default class Disponible implements IEstadoVehiculo {
      * Se usa cuando el vehículo debe ingresar a revisión o reparación.
      */
     asignarMantenimiento(): void {
-        this.vehiculo.cambiarEstado(EstadoFactory.crearENMantenimiento(this.vehiculo));
+        this.vehiculo.cambiarEstado(new En_Mantenimiento(this.vehiculo));
     }
 
     /**
@@ -67,7 +72,7 @@ export default class Disponible implements IEstadoVehiculo {
      * o como parte del flujo interno del sistema.
      */
     asignarLimpieza(): void {
-        this.vehiculo.cambiarEstado(EstadoFactory.crearNecesitaLimpieza(this.vehiculo));
+        this.vehiculo.cambiarEstado(new Necesita_Limpieza(this.vehiculo));
     }
 
     /**
@@ -77,5 +82,9 @@ export default class Disponible implements IEstadoVehiculo {
      */
     puedeAlquilar(): boolean {
         return true;
+    }
+
+    evaluarMantenimiento(): void {
+        throw new Error("Method not implemented.");
     }
 }
