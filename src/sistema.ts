@@ -3,6 +3,7 @@ import Cliente from "./cliente";
 import Reserva from "./reserva";
 import IGeneradorReporte from "./reportes/IgeneradorReporte";
 import GeneradorDeReporte from "./reportes/generadorReporte";
+import GestorTemporada from "./temporadas/gestorTemporada";
 
 /**
  * Sistema principal de DriveHub.
@@ -43,7 +44,7 @@ export default class SistemaDriveHub {
    */
   public crearReserva(cliente: Cliente, vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date) {
     if (vehiculo.getEstado().puedeAlquilar()) {
-      let reserva = new Reserva(vehiculo, cliente, fechaInicio, fechaFin);
+      let reserva = new Reserva(vehiculo, cliente, fechaInicio, fechaFin, GestorTemporada.asignarTemporadaMedia());
       this.reservas.push(reserva);
       vehiculo.alquilar();
       cliente.setReserva(reserva);

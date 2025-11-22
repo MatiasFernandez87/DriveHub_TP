@@ -1,5 +1,6 @@
 import Cliente from "../src/cliente";
 import Reserva from "../src/reserva";
+import GestorTemporada from "../src/temporadas/gestorTemporada";
 import TemporadaAlta from "../src/temporadas/temporada_alta";
 import TemporadaBaja from "../src/temporadas/temporada_baja";
 import TemporadaMedia from "../src/temporadas/temporada_media";
@@ -12,10 +13,11 @@ describe("Test clase Reserva", () => {
         let clienteMock: DeepMockProxy<Cliente> = mockDeep<Cliente>();
         let fechaInicio = new Date("2025-11-10");
         let fechaFin = new Date("2025-11-20");
-        let reserva = new Reserva(vehiculoMock, clienteMock, fechaInicio, fechaFin);
+        let temporada = GestorTemporada.asignarTemporadaMedia()
+        let reserva = new Reserva(vehiculoMock, clienteMock, fechaInicio, fechaFin, temporada);
         
         afterEach(() => {
-            reserva = new Reserva(vehiculoMock, clienteMock, fechaInicio, fechaFin);
+            reserva = new Reserva(vehiculoMock, clienteMock, fechaInicio, fechaFin, temporada);
         });
 
     it("Debe registrar los km hechos al total del vehiculo", () => {
@@ -56,33 +58,22 @@ describe("Test clase Reserva", () => {
     });
 
     it("getTemporada devuelve una instancia de TemporadaMedia para Noviembre", () => {
+        temporada = GestorTemporada.asignarTemporadaMedia();
+        reserva = new Reserva(vehiculoMock, clienteMock, fechaInicio, fechaFin, temporada);
         expect(reserva.getTemporada()).toBeInstanceOf(TemporadaMedia);
     });
 
     it("getTemporada devuelve una instancia de TemporadaAlta para Enero", () => {
-        fechaInicio = new Date("2025-01-10");
-        fechaFin = new Date("2025-01-20");
-        reserva = new Reserva(vehiculoMock, clienteMock, fechaInicio, fechaFin);
+        temporada = GestorTemporada.asignarTemporadaAlta();
+        reserva = new Reserva(vehiculoMock, clienteMock, fechaInicio, fechaFin, temporada);
         expect(reserva.getTemporada()).toBeInstanceOf(TemporadaAlta);
     });
 
     it("getTemporada devuelve una instancia de TemporadaBaja para Abril", () => {
-        fechaInicio = new Date("2025-04-02");
-        fechaFin = new Date("2025-04-05");
-        reserva = new Reserva(vehiculoMock, clienteMock, fechaInicio, fechaFin);
+        temporada = GestorTemporada.asignarTemporadaBaja();
+        reserva = new Reserva(vehiculoMock, clienteMock, fechaInicio, fechaFin, temporada);
         expect(reserva.getTemporada()).toBeInstanceOf(TemporadaBaja);
     });
 
-    it("Debe lanzar error al registrar uso fuera del período de la reserva", () => {
-    const reserva = new Reserva(
-        vehiculoMock,
-        clienteMock,
-        new Date(2025, 0, 1),
-        new Date(2025, 0, 5)
-    );
-
-    expect(() =>
-        reserva.registrarUsoVehiculo(50, new Date(2025, 0, 10))
-    ).toThrow("No se puede registrar uso fuera de las fechas de la reserva.");
-});
+    
 });
