@@ -55,8 +55,8 @@ export default class En_Alquiler implements IEstadoVehiculo {
      */
     asignarDisponible(): void {
         
-        this.evaluarMantenimiento();
         this.vehiculo.cambiarEstado(new Disponible(this.vehiculo));
+        this.evaluarMantenimiento();
     }
 
     /**
@@ -96,22 +96,40 @@ export default class En_Alquiler implements IEstadoVehiculo {
         return true;
     }
 
+
+    /**
+     * Conjunto de reglas utilizadas para determinar si un vehículo
+     * debe pasar por mantenimiento.
+     *
+     * Cada implementación de `INecesitaMantenimiento` define una condición
+     * distinta (kilometraje, cantidad de viajes, tiempo desde el último
+     * mantenimiento, etc.).
+     */
     private condicionesMantenimiento: INecesitaMantenimiento[] = [
         new KilometrosParaMantenimiento(),
         new CantViajes(),
         new UltimoMantenimiento(),
     ];
 
-     evaluarMantenimiento(): void {
-     const necesitaMantenimiento = this.condicionesMantenimiento.some(
-        regla => regla.necesitaMantenimiento(this.vehiculo))
+    /**
+     * Evalúa si el vehículo requiere mantenimiento según las reglas definidas.
+     *
+     * Recorre todas las condiciones de mantenimiento y, si alguna determina
+     * que es necesario, cambia el estado del vehículo a mantenimiento y
+     * registra la información correspondiente.
+     *
+     * @returns void
+     */
+    public evaluarMantenimiento(): void {
+        const necesitaMantenimiento = this.condicionesMantenimiento.some(
+            regla => regla.necesitaMantenimiento(this.vehiculo)
+        );
 
-            if (necesitaMantenimiento) {
-                this.asignarMantenimiento();
-                this.vehiculo.actualizarInfoMantenimiento();
-                return;
-            }
-            this.asignarDisponible();
+        if (necesitaMantenimiento) {
+            this.asignarMantenimiento();
+            this.vehiculo.actualizarInfoMantenimiento();
+            return;
         }
-        
     }
+        
+}

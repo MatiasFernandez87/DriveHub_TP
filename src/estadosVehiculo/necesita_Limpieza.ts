@@ -79,7 +79,15 @@ export default class Necesita_Limpieza implements IEstadoVehiculo {
         return false;
     }
 
+    /**
+     * Evalúa si el vehículo debe ingresar a mantenimiento según el estado actual.
+     *
+     * En este estado, el metodo lanza una excepcion, porque no esta permitido.
+     *
+     * @throws Error Cuando el estado del vehículo no admite esta operación.
+     * @returns void
+     */
     evaluarMantenimiento(): void {
-        throw new Error("El vehiculo está en mantenimiento");
+        throw new Error("El vehiculo está en limpieza");
     }
 }

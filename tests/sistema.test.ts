@@ -5,6 +5,7 @@ import Reserva from "../src/reserva";
 import { DeepMockProxy, mockDeep } from "jest-mock-extended";
 import IEstadoVehiculo from "../src/estadosVehiculo/IEstadoVehiculo";
 import GeneradorDeReporte from "../src/reportes/generadorReporte";
+import GestorTemporada from "../src/temporadas/gestorTemporada";
 
 describe("Tests de la clase SistemaDriveHub", () => {
   let sistema: SistemaDriveHub;
@@ -37,21 +38,22 @@ describe("Tests de la clase SistemaDriveHub", () => {
     const vehiculoMock: DeepMockProxy<Vehiculo> = mockDeep<Vehiculo>();
 
     const estadoMock: IEstadoVehiculo = {
-      estaEnMantenimiento: jest.fn(),
       puedeAlquilar: jest.fn().mockReturnValue(true),
+      estaEnMantenimiento: jest.fn(),
+      evaluarMantenimiento: jest.fn(),
       asignarAlquiler: jest.fn(),
       asignarDisponible: jest.fn(),
       asignarMantenimiento: jest.fn(),
       asignarLimpieza: jest.fn(),
     };
 
-    vehiculoMock.getEstado.mockReturnValue(estadoMock);
+    vehiculoMock.puedeAlquilar.mockReturnValue(true);
 
     sistema.crearReserva(
       clienteMock,
       vehiculoMock,
       new Date(2025, 1, 1),
-      new Date(2025, 1, 5)
+      new Date(2025, 1, 5),
     );
 
     expect(sistema["reservas"]).toHaveLength(1);
@@ -62,6 +64,7 @@ describe("Tests de la clase SistemaDriveHub", () => {
     const vehiculoMock: DeepMockProxy<Vehiculo> = mockDeep<Vehiculo>();
 
     const estadoMock: IEstadoVehiculo = {
+      evaluarMantenimiento: jest.fn(),
       estaEnMantenimiento: jest.fn(),
       puedeAlquilar: jest.fn().mockReturnValue(false),
       asignarAlquiler: jest.fn(),
@@ -85,7 +88,7 @@ describe("Tests de la clase SistemaDriveHub", () => {
     const tarifaFinal = sistema.calcularTarifaFinal(reservaMock);
 
     expect(tarifaFinal).toBe(1200);
-    expect(vehiculoMock.necesitaMantenimiento).toHaveBeenCalled();
+    expect(vehiculoMock.asignarDisponible).toHaveBeenCalled();
     const rentabilidadMap = sistema["rentabilidadVehiculos"];
     expect(rentabilidadMap.get(vehiculoMock)).toBe(1150);
   })
@@ -188,9 +191,3 @@ describe("Tests de la clase SistemaDriveHub", () => {
   });
 
 }); 
-
-
-
-
-
-

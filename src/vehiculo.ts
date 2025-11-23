@@ -118,7 +118,7 @@ export default abstract class Vehiculo {
         return this.cargoExtra;
     }
 
-    public getHistorialMantenimiento(): Map<Date, number>{
+    public getHistorialMantenimiento(): Map<Date, number> {
         return this.historialMantenimientos
     }
 
@@ -144,8 +144,8 @@ export default abstract class Vehiculo {
         this.cantidadViajes = cant;
     }
 
-    public setHistorialMantenimiento(fecha: Date, costoMantenimiento: number){
-        this.historialMantenimientos.set(fecha,costoMantenimiento);
+    public setHistorialMantenimiento(fecha: Date, costoMantenimiento: number) {
+        this.historialMantenimientos.set(fecha, costoMantenimiento);
     }
 
     /** Establece la fecha del último mantenimiento. */
@@ -225,7 +225,7 @@ export default abstract class Vehiculo {
      */
     public asignarAlquiler(): void {
         this.estadoVehiculo.asignarAlquiler();
-        this.cantidadViajes++; 
+        this.cantidadViajes++;
     }
 
     /**
@@ -240,9 +240,6 @@ export default abstract class Vehiculo {
      * 
      * @param {Date} ingreso - Fecha de ingreso al mantenimiento.
      */
-
-
-
     public asignarMantenimiento(): void {
         this.estadoVehiculo.asignarMantenimiento();
     }
@@ -264,9 +261,28 @@ export default abstract class Vehiculo {
      */
     public abstract calcularTarifa(reserva: Reserva): number;
 
-    public actualizarInfoMantenimiento(): void{
+    /**
+     * Indica si el vehículo está disponible para ser alquilado.
+     *
+     * Delegará la verificación en el estado actual del vehículo.
+     *
+     * @returns `true` si puede alquilarse, de lo contrario `false`.
+     */
+    public puedeAlquilar(): boolean {
+        return this.estadoVehiculo.puedeAlquilar();
+    }
+
+    /**
+     * Actualiza la información de mantenimiento del vehículo.
+     *
+     * Registra la fecha del último mantenimiento, actualiza el costo total
+     * acumulado y agrega una nueva entrada al historial de mantenimiento.
+     *
+     * @returns void
+     */
+    public actualizarInfoMantenimiento(): void {
         const fechaMantenimiento = new Date();
-        this.setFechaUltimoMantenimiento(fechaMantenimiento)
+        this.setFechaUltimoMantenimiento(fechaMantenimiento);
         this.setCostoTotalMantenimiento(this.getCostoPorMantenimiento());
         this.setHistorialMantenimiento(fechaMantenimiento, this.getCostoPorMantenimiento());
     }

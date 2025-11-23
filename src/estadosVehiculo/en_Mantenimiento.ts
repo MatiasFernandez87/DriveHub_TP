@@ -87,9 +87,17 @@ export default class En_Mantenimiento implements IEstadoVehiculo {
             return true;
         }
          return false;
-        }       
-
-        evaluarMantenimiento(): void {
+    }       
+    
+    /**
+     * Evalúa si el vehículo debe ingresar a mantenimiento según el estado actual.
+     *
+     * En este estado, el metodo lanza una excepcion, porque no esta permitido.
+     *
+     * @throws Error Cuando el estado del vehículo no admite esta operación.
+     * @returns void
+     */
+    evaluarMantenimiento(): void {
         throw new Error("El vehiculo ya se encuentra en mantenimiento");
     }
 }

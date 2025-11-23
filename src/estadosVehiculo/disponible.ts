@@ -84,7 +84,15 @@ export default class Disponible implements IEstadoVehiculo {
         return true;
     }
 
+    /**
+     * Evalúa si el vehículo debe ingresar a mantenimiento según el estado actual.
+     *
+     * En este estado, el metodo lanza una excepcion, porque no esta permitido.
+     *
+     * @throws Error Cuando el estado del vehículo no admite esta operación.
+     * @returns void
+     */
     evaluarMantenimiento(): void {
-        throw new Error("Method not implemented.");
+        throw new Error("El vehiculo se encuentra Disponible");
     }
 }
