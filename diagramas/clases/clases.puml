@@ -9,9 +9,15 @@ interface ITemporada{
     calculoPorTemporada(sistema: SistemaDriveHub): number; 
 }
 
-class temporada_alta implements ITemporada
-class temporada_baja implements ITemporada
-class temporada_media implements ITemporada     
+class GestorTemporada {
+    + asignarTemporadaAlta(): Temporada_Alta
+    + asignarTemporadaMedia(): Temporada_Media
+    + asignarTemporadaBaja(): Temporada_Baja
+}
+
+class Temporada_Alta implements ITemporada
+class Temporada_Baja implements ITemporada
+class Temporada_Media implements ITemporada     
 
 interface INecesitaMantenimiento{
     + necesitaMantenimiento():boolean
