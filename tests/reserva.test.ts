@@ -22,9 +22,9 @@ describe("Test clase Reserva", () => {
 
     it("Debe registrar los km hechos al total del vehiculo", () => {
 
-        reserva.registrarUsoVehiculo(150, new Date());
-        reserva.registrarUsoVehiculo(150, new Date());
-        reserva.registrarUsoVehiculo(150, new Date());
+        reserva.registrarUsoVehiculo(150, new Date("2025-11-11"));
+        reserva.registrarUsoVehiculo(150, new Date("2025-11-12"));
+        reserva.registrarUsoVehiculo(150, new Date("2025-11-13"));
 
         expect(vehiculoMock.getKilometraje.mockReturnValue(450));
         
@@ -51,9 +51,9 @@ describe("Test clase Reserva", () => {
     });
 
     it("getKmRecorridos debe contener la cantidad exacta", () => {
-        reserva.registrarUsoVehiculo(150, new Date());
-        reserva.registrarUsoVehiculo(150, new Date());
-        reserva.registrarUsoVehiculo(150, new Date());
+        reserva.registrarUsoVehiculo(150, new Date("2025-11-11"));
+        reserva.registrarUsoVehiculo(150, new Date("2025-11-12"));
+        reserva.registrarUsoVehiculo(150, new Date("2025-11-13"));
         expect(reserva.getKmRecorridos().size).toBe(3);
     });
 

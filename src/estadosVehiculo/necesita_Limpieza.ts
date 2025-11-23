@@ -2,8 +2,6 @@ import IEstadoVehiculo from "./IEstadoVehiculo";
 import Vehiculo from "../vehiculo";
 import Disponible from "./disponible";
 import En_Mantenimiento from "./en_Mantenimiento";
-import En_Alquiler from "./en_Alquiler";
-import EstadoFactory from "./estadosFactory";
 
 /**
  * Estado concreto del Patrón State que representa que el vehículo
@@ -23,6 +21,8 @@ export default class Necesita_Limpieza implements IEstadoVehiculo {
      * @param {Vehiculo} vehiculo - Vehículo cuyo estado se está gestionando.
      */
     constructor(private vehiculo: Vehiculo) {}
+
+
 
     /**
      * Indica si el vehículo está en mantenimiento.
@@ -49,7 +49,7 @@ export default class Necesita_Limpieza implements IEstadoVehiculo {
      * Asigna el estado "Disponible", indicando que la limpieza se realizó correctamente.
      */
     asignarDisponible(): void {
-        this.vehiculo.cambiarEstado(EstadoFactory.crearDisponible(this.vehiculo));
+        this.vehiculo.cambiarEstado(new Disponible(this.vehiculo));
     }
 
     /**
@@ -58,7 +58,7 @@ export default class Necesita_Limpieza implements IEstadoVehiculo {
      * Se permite porque la limpieza puede detectar un problema que requiera taller.
      */
     asignarMantenimiento(): void {
-        this.vehiculo.cambiarEstado(EstadoFactory.crearENMantenimiento(this.vehiculo));
+        this.vehiculo.cambiarEstado(new En_Mantenimiento(this.vehiculo));
     }
 
     /**
@@ -77,5 +77,9 @@ export default class Necesita_Limpieza implements IEstadoVehiculo {
      */
     puedeAlquilar(): boolean {
         return false;
+    }
+
+    evaluarMantenimiento(): void {
+        throw new Error("El vehiculo está en mantenimiento");
     }
 }

@@ -46,7 +46,7 @@ export default class SistemaDriveHub {
     if (vehiculo.getEstado().puedeAlquilar()) {
       let reserva = new Reserva(vehiculo, cliente, fechaInicio, fechaFin, GestorTemporada.asignarTemporadaMedia());
       this.reservas.push(reserva);
-      vehiculo.alquilar();
+      vehiculo.asignarAlquiler();
       cliente.setReserva(reserva);
     } else {
       throw new Error("El vehiculo no esta disponible.");
@@ -66,7 +66,7 @@ export default class SistemaDriveHub {
     const porcentajeTemporada = reserva.getTemporada().calculoPorTemporada();
     const tarifaFinal = tarifaBase * porcentajeTemporada;
 
-    vehiculo.necesitaMantenimiento();
+    vehiculo.asignarDisponible();
     this.asignarRentabilidad(vehiculo, tarifaFinal);
 
     return tarifaFinal;
