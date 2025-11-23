@@ -1,9 +1,12 @@
 import IEstadoVehiculo from "./IEstadoVehiculo";
 import Vehiculo from "../vehiculo";
+import INecesitaMantenimiento from "../necesitaMantenimiento/INecesitaMantenimiento";
 import Disponible from "./disponible";
 import En_Mantenimiento from "./en_Mantenimiento";
 import Necesita_Limpieza from "./necesita_Limpieza";
-import EstadoFactory from "./estadosFactory";
+import KilometrosParaMantenimiento from "../necesitaMantenimiento/kilometrosParaMantenimiento";
+import CantViajes from "../necesitaMantenimiento/cantViajes";
+import UltimoMantenimiento from "../necesitaMantenimiento/ultimoMantenimiento";
 
 /**
  * Estado concreto del Patrón State que representa que el vehículo
@@ -17,12 +20,15 @@ import EstadoFactory from "./estadosFactory";
  */
 export default class En_Alquiler implements IEstadoVehiculo {
 
+
     /**
      * Crea un nuevo estado "En Alquiler" para el vehículo especificado.
      *
      * @param {Vehiculo} vehiculo - Vehículo asociado al estado actual.
      */
     constructor(private vehiculo: Vehiculo) {}
+
+   
 
     /**
      * Indica si el vehículo se encuentra en mantenimiento.
@@ -48,7 +54,9 @@ export default class En_Alquiler implements IEstadoVehiculo {
      * y el vehículo puede volver a ser utilizado.
      */
     asignarDisponible(): void {
-        this.vehiculo.cambiarEstado(EstadoFactory.crearDisponible(this.vehiculo));
+        
+        this.vehiculo.cambiarEstado(new Disponible(this.vehiculo));
+        this.evaluarMantenimiento();
     }
 
     /**
@@ -58,7 +66,7 @@ export default class En_Alquiler implements IEstadoVehiculo {
      * inmediatamente después o durante el alquiler.
      */
     asignarMantenimiento(): void {
-        this.vehiculo.cambiarEstado(EstadoFactory.crearENMantenimiento(this.vehiculo));
+        this.vehiculo.cambiarEstado(new En_Mantenimiento(this.vehiculo));
     }
 
     /**
@@ -67,7 +75,7 @@ export default class En_Alquiler implements IEstadoVehiculo {
      * Normalmente se aplica cuando el cliente devuelve el vehículo.
      */
     asignarLimpieza(): void {
-        this.vehiculo.cambiarEstado(EstadoFactory.crearNecesitaLimpieza(this.vehiculo));
+        this.vehiculo.cambiarEstado(new Necesita_Limpieza(this.vehiculo));
     }
 
     /**
@@ -87,4 +95,41 @@ export default class En_Alquiler implements IEstadoVehiculo {
     estaAlquilado(): boolean {
         return true;
     }
+
+
+    /**
+     * Conjunto de reglas utilizadas para determinar si un vehículo
+     * debe pasar por mantenimiento.
+     *
+     * Cada implementación de `INecesitaMantenimiento` define una condición
+     * distinta (kilometraje, cantidad de viajes, tiempo desde el último
+     * mantenimiento, etc.).
+     */
+    private condicionesMantenimiento: INecesitaMantenimiento[] = [
+        new KilometrosParaMantenimiento(),
+        new CantViajes(),
+        new UltimoMantenimiento(),
+    ];
+
+    /**
+     * Evalúa si el vehículo requiere mantenimiento según las reglas definidas.
+     *
+     * Recorre todas las condiciones de mantenimiento y, si alguna determina
+     * que es necesario, cambia el estado del vehículo a mantenimiento y
+     * registra la información correspondiente.
+     *
+     * @returns void
+     */
+    public evaluarMantenimiento(): void {
+        const necesitaMantenimiento = this.condicionesMantenimiento.some(
+            regla => regla.necesitaMantenimiento(this.vehiculo)
+        );
+
+        if (necesitaMantenimiento) {
+            this.asignarMantenimiento();
+            this.vehiculo.actualizarInfoMantenimiento();
+            return;
+        }
+    }
+        
 }

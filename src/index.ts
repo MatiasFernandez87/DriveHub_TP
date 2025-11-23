@@ -9,7 +9,6 @@ export { default as SistemaDriveHub } from "./sistema";
 
 
 /** Estados de Vehículo (State Pattern) */
-export { default as EstadoFactory } from "./estadosVehiculo/estadosFactory";
 export { default as Disponible } from "./estadosVehiculo/disponible";
 export { default as EnAlquiler } from "./estadosVehiculo/en_Alquiler";
 export { default as EnMantenimiento } from "./estadosVehiculo/en_Mantenimiento";

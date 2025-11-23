@@ -1,10 +1,8 @@
 import IEstadoVehiculo from "./IEstadoVehiculo";
 import Vehiculo from "../vehiculo";
-import Disponible from "./disponible";
-import En_Alquiler from "./en_Alquiler";
-import Necesita_Limpieza from "./necesita_Limpieza";
-import EstadoFactory from "./estadosFactory";
 import moment from "moment";
+import Disponible from "./disponible";
+import Necesita_Limpieza from "./necesita_Limpieza";
 
 
 /**
@@ -25,6 +23,7 @@ export default class En_Mantenimiento implements IEstadoVehiculo {
      * @param {Vehiculo} vehiculo - Vehículo cuyo estado se está gestionando.
      */
     constructor(private vehiculo: Vehiculo) {}
+
 
     /**
      * Indica si el vehículo está en mantenimiento.
@@ -51,7 +50,7 @@ export default class En_Mantenimiento implements IEstadoVehiculo {
      * Se usa cuando el mantenimiento ya finalizó.
      */
     asignarDisponible(): void {
-        this.vehiculo.cambiarEstado(EstadoFactory.crearDisponible(this.vehiculo));
+        this.vehiculo.cambiarEstado(new Disponible(this.vehiculo));
     }
 
     /**
@@ -70,7 +69,7 @@ export default class En_Mantenimiento implements IEstadoVehiculo {
      * pasa primero por limpieza antes de estar disponible.
      */
     asignarLimpieza(): void {
-        this.vehiculo.cambiarEstado(EstadoFactory.crearNecesitaLimpieza(this.vehiculo));
+        this.vehiculo.cambiarEstado(new Necesita_Limpieza(this.vehiculo));
     }
 
     /**
@@ -78,14 +77,27 @@ export default class En_Mantenimiento implements IEstadoVehiculo {
      *
      * @returns {boolean} Siempre `false` mientras esté en mantenimiento.
      */
+
     puedeAlquilar(): boolean {
         const hace24hs = moment().subtract(24, "hours");
         
         if (moment(this.vehiculo.getFechaUltimoMantenimiento()).isBefore(hace24hs)) {
             this.vehiculo.setCostoTotalMantenimiento(this.vehiculo.getCostoPorMantenimiento())
-            this.vehiculo.devolver();
+            this.vehiculo.asignarDisponible();
             return true;
         }
          return false;
-        }       
+    }       
+    
+    /**
+     * Evalúa si el vehículo debe ingresar a mantenimiento según el estado actual.
+     *
+     * En este estado, el metodo lanza una excepcion, porque no esta permitido.
+     *
+     * @throws Error Cuando el estado del vehículo no admite esta operación.
+     * @returns void
+     */
+    evaluarMantenimiento(): void {
+        throw new Error("El vehiculo ya se encuentra en mantenimiento");
+    }
 }

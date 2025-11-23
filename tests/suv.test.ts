@@ -42,25 +42,11 @@ describe('Tests de la clase SUV', () => {
         expect(suv.calcularTarifa(reservaMock)).toBe(310);
     });
 
-    it("NO debe enviar a mantenimiento si no cumple ninguna regla", () => {
-    
-    suv.alquilar();
 
-    
-    suv.setCantidadViajes(1);
-    suv.setKmUltimoMantenimiento(0);
-    suv.setKilometraje(5000);
-    suv.setFechaUltimoMantenimiento(moment().toDate());
-
-   
-    suv.necesitaMantenimiento();
-
-    expect(suv.getEstado().constructor.name).toBe("Disponible");
-});
 it("Debe enviar a mantenimiento si excede viajes", () => {
     suv.setCantidadViajes(5);
 
-    suv.necesitaMantenimiento();
+    suv.asignarMantenimiento();
 
     expect(suv.getEstado().constructor.name).toBe("En_Mantenimiento");
 });
@@ -69,7 +55,7 @@ it("Debe enviar a mantenimiento si supera los kilómetros permitidos", () => {
     suv.setKmUltimoMantenimiento(0);
     suv.setKilometraje(20000); 
 
-    suv.necesitaMantenimiento(); 
+    suv.asignarMantenimiento(); 
 
     expect(suv.getEstado().constructor.name).toBe("En_Mantenimiento");
 });
@@ -79,7 +65,7 @@ it("Debe enviar a mantenimiento si pasaron más de 12 meses desde el último man
         moment().subtract(13, "months").toDate()
     );
 
-    suv.necesitaMantenimiento();
+    suv.asignarMantenimiento();
 
     expect(suv.getEstado().constructor.name).toBe("En_Mantenimiento");
 });

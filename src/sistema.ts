@@ -3,6 +3,7 @@ import Cliente from "./cliente";
 import Reserva from "./reserva";
 import IGeneradorReporte from "./reportes/IgeneradorReporte";
 import GeneradorDeReporte from "./reportes/generadorReporte";
+import GestorTemporada from "./temporadas/gestorTemporada";
 
 /**
  * Sistema principal de DriveHub.
@@ -12,45 +13,55 @@ import GeneradorDeReporte from "./reportes/generadorReporte";
  */
 export default class SistemaDriveHub {
 
-  /** Lista completa de vehículos registrados en el sistema. */
-  private vehiculos: Vehiculo[] = [];
+	/** Lista completa de vehículos registrados en el sistema. */
+	private vehiculos: Vehiculo[] = [];
 
-  /** Clientes cargados en el sistema. */
-  private clientes: Cliente[] = [];
+	/** Clientes cargados en el sistema. */
+	private clientes: Cliente[] = [];
 
-  /** Reservas creadas por los clientes. */
-  private reservas: Reserva[] = [];
+	/** Reservas creadas por los clientes. */
+	private reservas: Reserva[] = [];
 
-  /** Generador de reportes utilizado por el sistema. */
-  private generadorReporte: IGeneradorReporte = new GeneradorDeReporte();
+	/** Generador de reportes utilizado por el sistema. */
+	private generadorReporte: IGeneradorReporte = new GeneradorDeReporte();
 
-  /**
-   * Mapa de rentabilidad acumulada por vehículo.
-   * La clave es el vehículo y el valor es su ganancia actual.
-   */
-  private rentabilidadVehiculos: Map<Vehiculo, number> = new Map();
-
-
+	/**
+	 * Mapa de rentabilidad acumulada por vehículo.
+	 * La clave es el vehículo y el valor es su ganancia actual.
+	 */
+	private rentabilidadVehiculos: Map<Vehiculo, number> = new Map();
 
   /**
-   * Crea una nueva reserva si el vehículo está disponible.
+   * Verifica la disponibilidad del vehículo para realizar una reserva.
    *
-   * @param cliente - Cliente que realiza la reserva.
-   * @param vehiculo - Vehículo a reservar.
-   * @param fechaInicio - Fecha de inicio de la reserva.
-   * @param fechaFin - Fecha de fin de la reserva.
-   * @throws Error Si el vehículo no está disponible para alquilar.
+   * @param vehiculo - Instancia del vehículo a evaluar.
+   * @returns `true` si el vehículo está habilitado para alquilarse, `false` en caso contrario.
    */
-  public crearReserva(cliente: Cliente, vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date) {
-    if (vehiculo.getEstado().puedeAlquilar()) {
-      let reserva = new Reserva(vehiculo, cliente, fechaInicio, fechaFin);
-      this.reservas.push(reserva);
-      vehiculo.alquilar();
-      cliente.setReserva(reserva);
-    } else {
-      throw new Error("El vehiculo no esta disponible.");
-    }
+  public chequearDisponibilidad(vehiculo: Vehiculo): boolean {
+      return vehiculo.puedeAlquilar();
   }
+
+	/**
+	 * Crea una nueva reserva si el vehículo está disponible.
+	 *
+	 * @param cliente - Cliente que realiza la reserva.
+	 * @param vehiculo - Vehículo a reservar.
+	 * @param fechaInicio - Fecha de inicio de la reserva.
+	 * @param fechaFin - Fecha de fin de la reserva.
+	 * @throws Error Si el vehículo no está disponible para alquilar.
+	 */
+	public crearReserva(cliente: Cliente, vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date) {
+		if (!this.chequearDisponibilidad(vehiculo)) {
+			throw new Error("El vehiculo no esta disponible.");
+		}
+	  
+		let reserva = new Reserva(vehiculo, cliente, fechaInicio, fechaFin, GestorTemporada.asignarTemporadaMedia());
+		this.reservas.push(reserva);
+		vehiculo.asignarAlquiler();
+		cliente.setReserva(reserva);
+	}
+
+ 
 
   /**
    * Calcula la tarifa final de una reserva considerando
@@ -65,7 +76,7 @@ export default class SistemaDriveHub {
     const porcentajeTemporada = reserva.getTemporada().calculoPorTemporada();
     const tarifaFinal = tarifaBase * porcentajeTemporada;
 
-    vehiculo.necesitaMantenimiento();
+    vehiculo.asignarDisponible();
     this.asignarRentabilidad(vehiculo, tarifaFinal);
 
     return tarifaFinal;

@@ -9,9 +9,15 @@ interface ITemporada{
     calculoPorTemporada(sistema: SistemaDriveHub): number; 
 }
 
-class temporada_alta implements ITemporada
-class temporada_baja implements ITemporada
-class temporada_media implements ITemporada     
+class GestorTemporada {
+    + asignarTemporadaAlta(): Temporada_Alta
+    + asignarTemporadaMedia(): Temporada_Media
+    + asignarTemporadaBaja(): Temporada_Baja
+}
+
+class Temporada_Alta implements ITemporada
+class Temporada_Baja implements ITemporada
+class Temporada_Media implements ITemporada     
 
 interface INecesitaMantenimiento{
     + necesitaMantenimiento():boolean
@@ -29,6 +35,7 @@ interface IEstadoVehiculo {
 
     + puedeAlquilar() : boolean
     + estaEnMantenimiento() : boolean 
+    + evaluarMantenimiento() : void
 }
 
 interface IGeneradorDeReporte {
@@ -43,11 +50,9 @@ class GeneradorReporte implements IGeneradorDeReporte{}
 
 class Disponible implements IEstadoVehiculo
 class En_Alquiler implements IEstadoVehiculo{
-    + estaAlquilado : boolean
-}
-class En_Mantenimiento implements IEstadoVehiculo{
     + estaEnMantenimiento : boolean
 }
+class En_Mantenimiento implements IEstadoVehiculo
 class Necesita_Limpieza implements IEstadoVehiculo
 
 abstract class Vehiculo {
@@ -59,22 +64,22 @@ abstract class Vehiculo {
     # kmUltimoMantenimiento : number
     # cantViajes : number
     # fechaUltimoMantenimiento: Date
-    # condicionesMantenimiento: INecesitaMantenimiento[]
     # costoTotalMantenimiento : number
     # costoPorMantenimiento: number
     # historialMantenimientos: Map<Date, number>
 
     --setters y getters--
 
-    + cambiarEstado(estado : IEstadoVehiculo) : void
-    + necesitaMantenimiento() : void
-    + alquilar() : void
-    + devolver() : void
-    + enviarAMantenimiento() : void
-    + limpiar() : void
-    
-    + actualizarKilometraje(nuevo:number) : void
-    + calcularTarifa(reserva) : number
+    +actualizarInfoMantenimiento(nuevi:number):void
+    +cambiarEstado (estado: IEstadoVehiculo): void
+    +asignarAlquiler(): void
+    +asignarDisponible(): void
+    +asignarMantenimiento(): void
+    +asignarLimpieza(): void
+    +calcularTarifa (reserva: Reserva): number
+    +puedeAlquilar(): boolean
+    +actualizarInfoMantenimiento(): void
+
 }
 
 class Compacto extends Vehiculo {
@@ -127,12 +132,12 @@ class SistemaDriveHub {
     - vehiculos: Vehiculo[]
     - clientes: Cliente[]
     - reservas: Reserva[]
-    - mantenimiento: Mantenimiento[] 
     - generadorReporte : IGeneradorDeReporte
     - rentabilidadVehiculos : Map<Vehiculo, number>   
     
     ---setters y getters-----
 
+    + chequearDisponibilidad(vehiculo:Vehiculo) : boolean
     + crearReserva(cliente: Cliente, vehiculo: Vehiculo, fechaInicio: Date, fechaFin: Date)   
     + calcularTarifaFinal(reserva : Reserva) : number
     + asignarRentabilidad (vehiculo: Vehiculo, tarifaFinal: number)
@@ -141,16 +146,9 @@ class SistemaDriveHub {
     + reporteVehiculoMenosAlquilado(fechaInicio: Date, fechaFin: Date): Vehiculo
     + reporteVehiculoMasRentable() : Vehiculo
     + reporteVehiculoMenosRentable() : Vehiculo
-    + asignarMantenimiento(vehiculo: Vehiculo, fecha: Date, costo: number)) 
 
 }
 
-class EstadosFactory {
-    + static crearEstadoDisponible(vehiculo: Vehiculo) : Disponible
-    + static crearEstadoEnAlquiler(vehiculo: Vehiculo) : en_Alquiler
-    + static crearEstadoEnMantenimiento(vehiculo: Vehiculo) : en_Mantenimiento
-    + static crearEstadoNecesitaLimpieza(vehiculo: Vehiculo) : necesita_Limpieza
-}
 
 'notas
 ' note left of SistemaDriveHub::crearReserva

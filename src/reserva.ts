@@ -5,6 +5,7 @@ import moment from "moment";
 import TemporadaAlta from "./temporadas/temporada_alta";
 import TemporadaMedia from "./temporadas/temporada_media";
 import TemporadaBaja from "./temporadas/temporada_baja";
+import GestorTemporada from "./temporadas/gestorTemporada";
 
 /**
  * Representa una reserva realizada por un cliente para un vehículo,
@@ -54,7 +55,8 @@ export default class Reserva {
     vehiculo: Vehiculo,
     cliente: Cliente,
     fechaInicio: Date,
-    fechaFin: Date
+    fechaFin: Date,
+    temporada: ITemporada
   ) {
     this.idReserva = Reserva.idBase++;
     this.vehiculo = vehiculo;
@@ -62,7 +64,7 @@ export default class Reserva {
     this.fechaInicio = fechaInicio;
     this.fechaFin = fechaFin;
     this.kmInicial = vehiculo.getKilometraje();
-    this.temporada = this.setTemporada();
+    this.temporada = temporada;
   }
 
   /**
@@ -129,35 +131,8 @@ export default class Reserva {
    * @param dia - Fecha en la que se registraron los kilómetros.
    */
   public registrarUsoVehiculo(kilometros: number, dia: Date): void {
-    if (dia < this.fechaInicio || dia > this.fechaFin) {
-        throw new Error(
-            "No se puede registrar uso fuera de las fechas de la reserva."
-        );
-    }
     this.kmRecorridos.set(dia, kilometros);
     this.vehiculo.actualizarKilometraje(kilometros);
 }
-
-  /**
-   * Determina y asigna la temporada correspondiente en función
-   * del día del año de la fecha de inicio.
-   * 
-   * - 1 a 80 → Temporada Alta  
-   * - 81 a 264 → Temporada Baja  
-   * - 265 a 365 → Temporada Media
-   * 
-   * @returns Instancia de la temporada asignada.
-   */
-  public setTemporada(): ITemporada {
-    const dia = moment(this.fechaInicio).dayOfYear();
-
-    if (dia >= 1 && dia <= 80) {
-      return new TemporadaAlta();
-    } else if (dia >= 81 && dia <= 264) {
-      return new TemporadaBaja();
-    } else {
-      return new TemporadaMedia();
-    }
-  }
 
 }

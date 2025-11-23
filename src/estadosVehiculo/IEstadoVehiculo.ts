@@ -55,4 +55,17 @@ export default interface IEstadoVehiculo {
     * @returns {boolean} `true` si el estado representa "En Mantenimiento".
      */
     estaEnMantenimiento(): boolean;
+    
+    /**
+     * Evalúa si el vehículo debe ingresar a mantenimiento según el estado actual.
+     *
+     * Algunas implementaciones pueden lanzar una excepción si la evaluación
+     * no está permitida en ese estado.
+     *
+     * @throws Error Cuando el estado del vehículo no admite esta operación.
+     * @returns void
+     */
+    evaluarMantenimiento(): void;
+
+
 }
